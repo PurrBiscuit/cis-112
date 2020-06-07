@@ -1,0 +1,13 @@
+42.) a. O(N^2)
+     b. O(N^2)
+     c. O(N^5)
+     d. O(Nlog2N)
+     e. O(N^4)
+     f. O(N^2)
+     
+43.) a. O(N)
+     b. O(N^2)
+     c. O(log2N)
+     d. O(N^2)
+     e. O(N)
+     f. O(N)
