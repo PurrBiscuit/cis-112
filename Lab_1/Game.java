@@ -2,6 +2,9 @@ import java.util.*;
 
 public class Game
 {
+  // toggle this variable to turn debug logging on/off
+  final static boolean DEBUG_LOGS = true;
+
   static Random r = new Random();
   static int boardLength = 8;
   static int incorrectRemaining = 3;
@@ -22,7 +25,9 @@ public class Game
     {
       if (correctCoordinates[i] != null && correctCoordinates[i].equals(coord))
       {
-        System.out.println("Match Found! -> " + correctCoordinates[i] + " = " + coord);
+        if (DEBUG_LOGS)
+          System.out.println("Match Found! -> " + correctCoordinates[i] + " = " + coord);
+
         return false;
       }
     }
@@ -49,12 +54,14 @@ public class Game
         x = r.nextInt(boardLength);
         y = r.nextInt(boardLength);
         
-        System.out.println("Trying -> " + x + "" + y);
+        if (DEBUG_LOGS)
+          System.out.println("Trying -> " + x + "" + y);
       } while (!isMatch(x + "" + y));
       
       correctCoordinates[i] = (x + "" + y);
       
-      System.out.println("Random coordinates... x = " + x + ", y = " + y);
+      if (DEBUG_LOGS)
+        System.out.println("Random coordinates... x = " + x + ", y = " + y);
     }
   };
   
@@ -84,7 +91,7 @@ public class Game
   {
     initializeBoard();
     
-    String startMessage = "**************\n  FIND THE o  \n**************\n";
+    String startMessage = "\n**************\n  FIND THE o  \n**************\n";
     
     System.out.println(startMessage);
   };
