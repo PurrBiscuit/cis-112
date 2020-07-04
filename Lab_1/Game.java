@@ -15,8 +15,19 @@ public class Game
   public static void main(String[] args)
   {
     startGame();
-    
-    printStatus();
+
+    boolean quit = false;
+
+    do {
+      printStatus();
+
+      System.out.print("\n[m]ove, [u]ndo, [r]edo, [q]uit: ");
+      Scanner kb = new Scanner(System.in);
+      String input = kb.nextLine();
+
+      quit = input.equals("q");
+
+    } while (!quit);
   };
   
   public static boolean isMatch(String coord)
