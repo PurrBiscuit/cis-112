@@ -27,7 +27,36 @@ public class Game
 
       quit = input.equals("q");
 
-    } while (!quit);
+      if (input.equals("m"))
+        getCoordinates();
+
+    } while (!quit && incorrectRemaining > 0 && stepsRemaining > 0);
+
+    if (!quit)
+    {
+      printStatus();
+      String message = (incorrectRemaining == 0) ? "Too many incorrect guesses!" : "Congratulations, you won!";
+      System.out.println("\nGAME OVER!! " + message);
+    }
+  };
+
+  public static void getCoordinates()
+  {
+    System.out.print("Coordinates: ");
+    Scanner kb = new Scanner(System.in);
+    String input = kb.nextLine();
+    int x = Character.getNumericValue(input.charAt(0));
+    int y = Character.getNumericValue(input.charAt(1));
+
+    if (isMatch(input))
+    {
+      board[x][y] = "o";
+      stepsRemaining--;
+    }
+    else {
+      board[x][y] = "x";
+      incorrectRemaining--;
+    };
   };
   
   public static boolean isMatch(String coord)
@@ -39,11 +68,11 @@ public class Game
         if (DEBUG_LOGS)
           System.out.println("Match Found! -> " + correctCoordinates[i] + " = " + coord);
 
-        return false;
+        return true;
       }
     }
     
-    return true;
+    return false;
   };
   
   public static void initializeBoard()
@@ -67,7 +96,7 @@ public class Game
         
         if (DEBUG_LOGS)
           System.out.println("Trying -> " + x + "" + y);
-      } while (!isMatch(x + "" + y));
+      } while (isMatch(x + "" + y));
       
       correctCoordinates[i] = (x + "" + y);
       
