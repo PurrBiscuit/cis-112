@@ -5,7 +5,7 @@ import java.util.*;
 public class Game
 {
   // toggle this variable to turn debug logging on/off
-  final static boolean DEBUG_LOGS = true;
+  final static boolean DEBUG_LOGS = false;
 
   static Random r = new Random();
   static int boardLength = 8;
@@ -254,7 +254,7 @@ public class Game
 
   public static String sanitizeInput(String input)
   {
-    input = input.replaceAll("\\s+", " ");
+    input = input.replaceAll("\\s+", " ").trim();
 
     if (DEBUG_LOGS)
       System.out.println("\nInput after sanitizing: " + input);
