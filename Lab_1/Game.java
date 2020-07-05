@@ -1,4 +1,5 @@
 import ch02.stacks.LinkedStack;
+import ch02.stacks.StackUnderflowException;
 import java.util.*;
 
 public class Game
@@ -196,6 +197,27 @@ public class Game
 
   public static void undoMove()
   {
-    System.out.println("Undoing the last move...");
+    try {
+      String prevMove = undoStack.top();
+
+      if (DEBUG_LOGS)
+        System.out.println("\nUndoing the last move -> " + prevMove + "\n");
+
+      if (isMatch(prevMove))
+        stepsRemaining++;
+      else
+        incorrectRemaining++;
+
+      int x = Character.getNumericValue(prevMove.charAt(0));
+      int y = Character.getNumericValue(prevMove.charAt(1));
+
+      board[y][x] = "*";
+
+      redoStack.push(prevMove);
+
+      undoStack.pop();
+    } catch (StackUnderflowException err) {
+      System.out.println("\nNo more moves to undo...\n");
+    }
   };
 }
