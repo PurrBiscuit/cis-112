@@ -84,7 +84,7 @@ public class Game
       clearRedo();
       System.out.println();
     } else {
-      System.out.println("\nThe coordinates " + input + " where already input previously...skipping....\n");
+      System.out.println("\nThe coordinates " + move + " where already input previously...skipping....\n");
     };
   };
 
