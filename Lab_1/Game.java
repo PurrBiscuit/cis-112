@@ -69,13 +69,15 @@ public class Game
     int x = Character.getNumericValue(input.charAt(0));
     int y = Character.getNumericValue(input.charAt(1));
 
-    setCoordinates(x, y, input);
-
-    undoStack.push(input);
-
-    clearRedo();
-
-    System.out.println();
+    if (isUniqueCoordinate(x, y))
+    {
+      setCoordinates(x, y, input);
+      undoStack.push(input);
+      clearRedo();
+      System.out.println();
+    } else {
+      System.out.println("\nThe coordinates " + input + " where already input previously...skipping....\n");
+    };
   };
   
   public static boolean isMatch(String coord)
@@ -92,6 +94,11 @@ public class Game
     }
     
     return false;
+  };
+
+  public static boolean isUniqueCoordinate(int x, int y)
+  {
+    return board[y][x] == "*";
   };
   
   public static void initializeBoard()
