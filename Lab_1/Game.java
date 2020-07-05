@@ -106,7 +106,7 @@ public class Game
 
   public static boolean isUniqueCoordinate(Move m)
   {
-    return board.getMark(m.getY(), m.getX()) == "*";
+    return board.getMark(m.getX(), m.getY()) == "*";
   };
 
   public static boolean isValidCoordinate(int x, int y)
