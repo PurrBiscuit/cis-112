@@ -95,7 +95,7 @@ public class Game
       if (correctMoves[i] != null && correctMoves[i].equals(m))
       {
         if (DEBUG_LOGS)
-          System.out.println("Match Found!:  " + correctMoves[i] + " = " + m);
+          System.out.println("[DEBUG] Match Found!:  " + correctMoves[i] + " = " + m);
 
         return true;
       }
@@ -148,13 +148,13 @@ public class Game
         m = new Move(r.nextInt(boardLength), r.nextInt(boardLength));
         
         if (DEBUG_LOGS)
-          System.out.println("Trying -> " + m.getX() + " " + m.getY());
+          System.out.println("[DEBUG] Trying -> " + m.getX() + " " + m.getY());
       } while (isMatch(m));
       
       correctMoves[i] = m;
       
       if (DEBUG_LOGS)
-        System.out.println("Random coordinates: " + m);
+        System.out.println("[DEBUG] Added coordinates: " + m);
     }
   };
   
@@ -203,7 +203,7 @@ public class Game
       Move prevUndo = redoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nRedoing the last undo move: " + prevUndo + "\n");
+        System.out.println("\n[DEBUG] Redoing the last undo move: " + prevUndo + "\n");
 
       setCoordinates(prevUndo);
 
@@ -220,7 +220,7 @@ public class Game
     input = input.replaceAll("\\s+", " ").trim();
 
     if (DEBUG_LOGS)
-      System.out.println("\nInput after sanitizing: " + input);
+      System.out.println("\n[DEBUG] Input after sanitizing: " + input);
 
     return input;
   };
@@ -258,7 +258,7 @@ public class Game
       Move prevMove = undoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nUndoing the last move: " + prevMove + "\n");
+        System.out.println("\n[DEBUG] Undoing the last move: " + prevMove + "\n");
 
       if (prevMove.isMatch())
         stepsRemaining++;
