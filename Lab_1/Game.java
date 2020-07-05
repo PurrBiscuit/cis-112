@@ -5,7 +5,7 @@ import java.util.*;
 public class Game
 {
   // toggle this variable to turn debug logging on/off
-  final static boolean DEBUG_LOGS = true;
+  final static boolean DEBUG_LOGS = false;
 
   private static Random r = new Random();
   private static int boardLength = 8;
@@ -46,6 +46,8 @@ public class Game
   };
 
   private static void checkMove(Move m)
+  // checks whether the input move by the user is a match or not;
+  // also marks the board and decrements the appropriate counter variable
   {
     int x = m.getX();
     int y = m.getY();
@@ -64,12 +66,14 @@ public class Game
   };
 
   private static void clearRedo()
+  // clears out the redo stack
   {
     while (!redoStack.isEmpty())
       redoStack.pop();
   };
 
   private static void endGame()
+  // prints out the game over messaging
   {
     System.out.println("\n**************\n  GAME OVER  \n**************\n");
 
@@ -79,6 +83,8 @@ public class Game
   };
 
   private static void getMove()
+  // prompt the user for a coordinate (move) and does some validation
+  // to make sure the move is valid and the space is free before proceeding
   {
     String input;
 
@@ -107,6 +113,8 @@ public class Game
   };
 
   private static boolean isMatch(Move m)
+  // checks to see if the move is a match against the
+  // list of moves in the correctMoves array
   {
     for (int i = 0; i < correctMoves.length; i++)
     {
@@ -123,6 +131,8 @@ public class Game
   };
 
   private static boolean isValidInput(String input)
+  // validation method that checks to see if the input
+  // from the user contains at least two integers
   {
     String[] inputArr = input.split(" ");
 
@@ -141,8 +151,10 @@ public class Game
   };
 
   private static boolean isValidMove(int x, int y)
+  // validation method that checks to see if the coordinates
+  // input by the user fall within the board's grid
   {
-    if ((x > boardLength - 1) || (y > boardLength - 1))
+    if ((x > board.getWidth() - 1) || (y > board.getHeight() - 1))
     {
       System.out.println("\n" + x + " " + y + " is not a valid move\n");
       return false;
@@ -152,6 +164,8 @@ public class Game
   };
 
   private static void populateCorrectMoves()
+  // helper method which populates the list of correct moves at the start
+  // of a game; validation included to protect from duplicate values being added
   {
     for (int i = 0; i < correctMoves.length; i++)
     {
@@ -172,6 +186,8 @@ public class Game
   };
   
   private static void printFinalMessage()
+  // logging method which prints out a final message to
+  // the user depending on how the game was exited
   {
     String message;
 
@@ -186,6 +202,8 @@ public class Game
   };
 
   private static void printSolution()
+  // logging method which sets the board to the
+  // correct solution and prints it out to the user
   {
     for (int y = 0; y < board.getHeight(); y++)
       for (int x = 0; x < board.getWidth(); x++)
@@ -203,6 +221,7 @@ public class Game
   };
 
   private static void printStatus()
+  // logging method which prints the current status of the game to the user
   {
     System.out.println("Steps Remaining: " + stepsRemaining);
     System.out.println("Incorrect Guesses Remaining: " + incorrectRemaining + "\n");
@@ -211,6 +230,8 @@ public class Game
   };
 
   private static void redoMove()
+  // pops any redo moves off the redoMove stack and runs them through
+  // the checkMove method to mark the board and reset counters as appropriate
   {
     try {
       Move prevUndo = redoStack.top();
@@ -229,6 +250,7 @@ public class Game
   };
 
   private static String sanitizeInput(String input)
+  // helper method to trim any unwanted whitespace off that a user may have entered
   {
     input = input.replaceAll("\\s+", " ").trim();
 
@@ -239,15 +261,17 @@ public class Game
   };
 
   private static void startGame()
+  // helper method to trigger the populateCorrectMoves method
+  // and print the welcome message to the user for a new game
   {
     populateCorrectMoves();
     
-    String startMessage = "\n**************\n  FIND THE o  \n**************\n";
-    
-    System.out.println(startMessage);
+    System.out.println("\n**************\n  FIND THE o  \n**************\n");
   };
 
   private static void undoMove()
+  // pops any previously input or redone moves off the undoMove stack and
+  // marks the board back to "*" as well as adjusting the appropriate counter
   {
     try {
       Move prevMove = undoStack.top();
