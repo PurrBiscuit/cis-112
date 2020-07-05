@@ -8,7 +8,7 @@ public class Game
   final static boolean DEBUG_LOGS = false;
 
   private static Random r = new Random();
-  private static int boardLength = 8;
+  private static int boardLength = 3;
   private static int incorrectRemaining = 3;
   private static int stepsRemaining = r.nextInt(boardLength) + 1;
   private static Board board = new Board(boardLength);
@@ -47,21 +47,16 @@ public class Game
 
   private static void checkMove(Move m)
   // checks whether the input move by the user is a match or not;
-  // also marks the board and decrements the appropriate counter variable
+  // also calls the appropriate helper method to adjust board and counters
   {
-    int x = m.getX();
-    int y = m.getY();
-
     if (isMatch(m))
     {
-      board.setMark(x, y, "o");
       m.setMatch(true);
-      stepsRemaining--;
+      setCorrectMatch(m);
     }
     else {
-      board.setMark(x, y, "x");
       m.setMatch(false);
-      incorrectRemaining--;
+      setIncorrectMatch(m);
     };
   };
 
@@ -230,8 +225,8 @@ public class Game
   };
 
   private static void redoMove()
-  // pops any redo moves off the redoMove stack and runs them through
-  // the checkMove method to mark the board and reset counters as appropriate
+  // pops any redo moves off the redoMove stack and calls the appopriate
+  // method to set the board and counters based on saved state from move object
   {
     try {
       Move prevUndo = redoStack.top();
@@ -239,7 +234,10 @@ public class Game
       if (DEBUG_LOGS)
         System.out.println("\n[DEBUG] Redoing the last undo move: " + prevUndo + "\n");
 
-      checkMove(prevUndo);
+      if (prevUndo.isMatch())
+        setCorrectMatch(prevUndo);
+      else
+        setIncorrectMatch(prevUndo);
 
       undoStack.push(prevUndo);
 
@@ -259,6 +257,22 @@ public class Game
 
     return input;
   };
+
+  private static void setCorrectMatch(Move m)
+  // helper method to adjust the stepsRemaing counter
+  // and mark the board with a correct match symbol ("o")
+  {
+    board.setMark(m.getX(), m.getY(), "o");
+    stepsRemaining--;
+  }
+
+  private static void setIncorrectMatch(Move m)
+  // helper method to adjust the incorrectRemaing counter
+  // and mark the board with an incorrect match symbol ("x")
+  {
+    board.setMark(m.getX(), m.getY(), "x");
+    incorrectRemaining--;
+  }
 
   private static void startGame()
   // helper method to trigger the populateCorrectMoves method
