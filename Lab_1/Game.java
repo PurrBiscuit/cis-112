@@ -62,15 +62,7 @@ public class Game
     int x = Character.getNumericValue(input.charAt(0));
     int y = Character.getNumericValue(input.charAt(1));
 
-    if (isMatch(input))
-    {
-      board[y][x] = "o";
-      stepsRemaining--;
-    }
-    else {
-      board[y][x] = "x";
-      incorrectRemaining--;
-    };
+    setCoordinates(x, y, input);
 
     undoStack.push(input);
 
@@ -178,7 +170,20 @@ public class Game
   public static void redoMove()
   {
     System.out.println("Redoing the last undone move...");
-  }
+  };
+
+  public static void setCoordinates(int x, int y, String coord)
+  {
+    if (isMatch(coord))
+    {
+      board[y][x] = "o";
+      stepsRemaining--;
+    }
+    else {
+      board[y][x] = "x";
+      incorrectRemaining--;
+    };
+  };
 
   public static void startGame()
   {
@@ -192,5 +197,5 @@ public class Game
   public static void undoMove()
   {
     System.out.println("Undoing the last move...");
-  }
+  };
 }
