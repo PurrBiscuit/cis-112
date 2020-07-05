@@ -11,7 +11,7 @@ public class Game
   static int boardLength = 8;
   static int incorrectRemaining = 3;
   static int stepsRemaining = r.nextInt(boardLength) + 1;
-  static String[][] board = new String[boardLength][boardLength];
+  static Board board = new Board(boardLength);
   static Move[] correctMoves = new Move[stepsRemaining];
   static LinkedStack<Move> redoStack = new LinkedStack<>();
   static LinkedStack<Move> undoStack = new LinkedStack<>();
@@ -88,15 +88,6 @@ public class Game
     };
   };
 
-  public static void initializeBoard()
-  {
-    for (int y = 0; y < board.length; y++)
-      for (int x = 0; x < board[y].length; x++)
-        board[y][x] = "*";
-
-    populateCorrectMoves();
-  };
-
   public static boolean isMatch(Move m)
   {
     for (int i = 0; i < correctMoves.length; i++)
@@ -115,7 +106,7 @@ public class Game
 
   public static boolean isUniqueCoordinate(Move m)
   {
-    return board[m.getY()][m.getX()] == "*";
+    return board.getMark(m.getY(), m.getX()) == "*";
   };
 
   public static boolean isValidCoordinate(int x, int y)
@@ -167,31 +158,6 @@ public class Game
     }
   };
   
-  public static void printBoard()
-  {
-    System.out.print("  ");
-
-    for (int i = 0; i < board[0].length; i++)
-    {
-      String extraSpace = (board.length >= 10 && i < 10) ? " " : "";
-      System.out.print(extraSpace + i + " ");
-    }
-
-    System.out.println();
-
-    for (int y = 0; y < board.length; y++)
-    {
-      String extraSpace = (board.length >= 10 && y < 10) ? " " : "";
-      System.out.print(y + " " + extraSpace);
-      for (int x = 0; x < board[y].length; x++)
-      {
-        String space = (board.length >= 10) ? "  " : " ";
-        String trailing = (x == board[y].length - 1) ? "\n" : space;
-        System.out.print(board[y][x] + trailing);
-      }
-    };
-  };
-  
   public static void printFinalMessage()
   {
     String message;
@@ -208,19 +174,19 @@ public class Game
 
   public static void printSolution()
   {
-    for (int y = 0; y < board.length; y++)
-      for (int x = 0; x < board[y].length; x++)
-        board[y][x] = "x";
+    for (int y = 0; y < board.getHeight(); y++)
+      for (int x = 0; x < board.getWidth(); x++)
+        board.setMark(x, y, "x");
 
     for (int i = 0; i < correctMoves.length; i++)
     {
       int x = correctMoves[i].getX();
       int y = correctMoves[i].getY();
 
-      board[y][x] = "o";
+      board.setMark(x, y, "o");
     }
 
-    printBoard();
+    System.out.println(board);
   };
 
   public static void printStatus()
@@ -228,7 +194,7 @@ public class Game
     System.out.println("Steps Remaining: " + stepsRemaining);
     System.out.println("Incorrect Guesses Remaining: " + incorrectRemaining + "\n");
 
-    printBoard();
+    System.out.println(board);
   };
 
   public static void redoMove()
@@ -266,12 +232,12 @@ public class Game
 
     if (isMatch(m))
     {
-      board[y][x] = "o";
+      board.setMark(x, y, "o");
       m.setMatch(true);
       stepsRemaining--;
     }
     else {
-      board[y][x] = "x";
+      board.setMark(x, y, "x");
       m.setMatch(false);
       incorrectRemaining--;
     };
@@ -279,7 +245,7 @@ public class Game
 
   public static void startGame()
   {
-    initializeBoard();
+    populateCorrectMoves();
     
     String startMessage = "\n**************\n  FIND THE o  \n**************\n";
     
@@ -299,7 +265,7 @@ public class Game
       else
         incorrectRemaining++;
 
-      board[prevMove.getY()][prevMove.getX()] = "*";
+      board.setMark(prevMove.getX(), prevMove.getY(), "*");
 
       redoStack.push(prevMove);
 
