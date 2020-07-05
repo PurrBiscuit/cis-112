@@ -9,9 +9,9 @@ public class Move
     this.y = y;
   };
 
-  public String getStringifiedCoordinates()
+  public boolean equals(Move m)
   {
-    return x + " " + y;
+    return m.x == x && m.y == y;
   }
 
   public int getX()

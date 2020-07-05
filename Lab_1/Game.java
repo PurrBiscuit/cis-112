@@ -5,14 +5,14 @@ import java.util.*;
 public class Game
 {
   // toggle this variable to turn debug logging on/off
-  final static boolean DEBUG_LOGS = false;
+  final static boolean DEBUG_LOGS = true;
 
   static Random r = new Random();
   static int boardLength = 8;
   static int incorrectRemaining = 3;
   static int stepsRemaining = r.nextInt(boardLength) + 1;
   static String[][] board = new String[boardLength][boardLength];
-  static String[] correctCoordinates = new String[stepsRemaining];
+  static Move[] correctMoves = new Move[stepsRemaining];
   static LinkedStack<Move> redoStack = new LinkedStack<>();
   static LinkedStack<Move> undoStack = new LinkedStack<>();
 
@@ -94,17 +94,17 @@ public class Game
       for (int x = 0; x < board[y].length; x++)
         board[y][x] = "*";
 
-    populateCorrectCoordinates();
+    populateCorrectMoves();
   };
-  
-  public static boolean isMatch(String coord)
+
+  public static boolean isMatch(Move m)
   {
-    for (int i = 0; i < correctCoordinates.length; i++)
+    for (int i = 0; i < correctMoves.length; i++)
     {
-      if (correctCoordinates[i] != null && correctCoordinates[i].equals(coord))
+      if (correctMoves[i] != null && correctMoves[i].equals(m))
       {
         if (DEBUG_LOGS)
-          System.out.println("Match Found! -> " + correctCoordinates[i] + " = " + coord);
+          System.out.println("Match Found!:  " + correctMoves[i] + " = " + m);
 
         return true;
       }
@@ -115,10 +115,7 @@ public class Game
 
   public static boolean isUniqueCoordinate(Move m)
   {
-    int x = m.getX();
-    int y = m.getY();
-
-    return board[y][x] == "*";
+    return board[m.getY()][m.getX()] == "*";
   };
 
   public static boolean isValidCoordinate(int x, int y)
@@ -149,25 +146,24 @@ public class Game
 
     return false;
   };
-  
-  public static void populateCorrectCoordinates()
+
+  public static void populateCorrectMoves()
   {
-    for (int i = 0; i < correctCoordinates.length; i++)
+    for (int i = 0; i < correctMoves.length; i++)
     {
-      int x, y;
+      Move m;
       
       do {
-        x = r.nextInt(boardLength);
-        y = r.nextInt(boardLength);
+        m = new Move(r.nextInt(boardLength), r.nextInt(boardLength));
         
         if (DEBUG_LOGS)
-          System.out.println("Trying -> " + x + " " + y);
-      } while (isMatch(x + " " + y));
+          System.out.println("Trying -> " + m.getX() + " " + m.getY());
+      } while (isMatch(m));
       
-      correctCoordinates[i] = (x + " " + y);
+      correctMoves[i] = m;
       
       if (DEBUG_LOGS)
-        System.out.println("Random coordinates... x = " + x + ", y = " + y);
+        System.out.println("Random coordinates: " + m);
     }
   };
   
@@ -214,14 +210,15 @@ public class Game
   {
     for (int y = 0; y < board.length; y++)
       for (int x = 0; x < board[y].length; x++)
-      {
-        String coord = Integer.toString(x) + " " + Integer.toString(y);
+        board[y][x] = "x";
 
-        if (isMatch(coord))
-          board[y][x] = "o";
-        else
-          board[y][x] = "x";
-      }
+    for (int i = 0; i < correctMoves.length; i++)
+    {
+      int x = correctMoves[i].getX();
+      int y = correctMoves[i].getY();
+
+      board[y][x] = "o";
+    }
 
     printBoard();
   };
@@ -240,7 +237,7 @@ public class Game
       Move prevUndo = redoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nRedoing the last undo move: " + prevUndo.toString() + "\n");
+        System.out.println("\nRedoing the last undo move: " + prevUndo + "\n");
 
       setCoordinates(prevUndo);
 
@@ -267,7 +264,7 @@ public class Game
     int x = m.getX();
     int y = m.getY();
 
-    if (isMatch(m.getStringifiedCoordinates()))
+    if (isMatch(m))
     {
       board[y][x] = "o";
       m.setMatch(true);
@@ -295,17 +292,14 @@ public class Game
       Move prevMove = undoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nUndoing the last move: " + prevMove.toString() + "\n");
+        System.out.println("\nUndoing the last move: " + prevMove + "\n");
 
       if (prevMove.isMatch())
         stepsRemaining++;
       else
         incorrectRemaining++;
 
-      int x = prevMove.getX();
-      int y = prevMove.getY();
-
-      board[y][x] = "*";
+      board[prevMove.getY()][prevMove.getX()] = "*";
 
       redoStack.push(prevMove);
 
