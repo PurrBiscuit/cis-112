@@ -63,16 +63,17 @@ public class Game
   public static void getCoordinates()
   {
     String input;
-    int x, y;
 
     do {
-      System.out.print("Coordinates: ");
+      System.out.print("Coordinates (enter format as \"x y\"): ");
       Scanner kb = new Scanner(System.in);
       input = sanitizeInput(kb.nextLine());
+    } while (!isValidInput(input));
 
-      x = Character.getNumericValue(input.charAt(0));
-      y = Character.getNumericValue(input.charAt(1));
-    } while (!isValidCoordinate(x, y));
+    String[] inputArr = input.split(" ");
+
+    int x = Integer.parseInt(inputArr[0]);
+    int y = Integer.parseInt(inputArr[1]);
 
     if (isUniqueCoordinate(x, y))
     {
@@ -119,11 +120,29 @@ public class Game
   {
     if ((x > boardLength - 1) || (y > boardLength - 1))
     {
-      System.out.println("\n" + x + y + " is not a valid coordinate\n");
+      System.out.println("\n" + x + " " + y + " is not a valid coordinate\n");
       return false;
     }
 
     return true;
+  };
+
+  public static boolean isValidInput(String input)
+  {
+    String[] inputArr = input.split(" ");
+
+    if (inputArr.length >= 2)
+    {
+      try {
+        int x = Integer.parseInt(inputArr[0]);
+        int y = Integer.parseInt(inputArr[1]);
+        return isValidCoordinate(x, y);
+      } catch (Exception e) {}
+    }
+
+    System.out.println("\n" + input + " is not a valid input\n");
+
+    return false;
   };
   
   public static void populateCorrectCoordinates()
@@ -137,10 +156,10 @@ public class Game
         y = r.nextInt(boardLength);
         
         if (DEBUG_LOGS)
-          System.out.println("Trying -> " + x + "" + y);
-      } while (isMatch(x + "" + y));
+          System.out.println("Trying -> " + x + " " + y);
+      } while (isMatch(x + " " + y));
       
-      correctCoordinates[i] = (x + "" + y);
+      correctCoordinates[i] = (x + " " + y);
       
       if (DEBUG_LOGS)
         System.out.println("Random coordinates... x = " + x + ", y = " + y);
@@ -180,7 +199,7 @@ public class Game
     for (int y = 0; y < board.length; y++)
       for (int x = 0; x < board[y].length; x++)
       {
-        String coord = Integer.toString(x) + Integer.toString(y);
+        String coord = Integer.toString(x) + " " + Integer.toString(y);
 
         if (isMatch(coord))
           board[y][x] = "o";
@@ -195,7 +214,7 @@ public class Game
   {
     System.out.println("Steps Remaining: " + stepsRemaining);
     System.out.println("Incorrect Guesses Remaining: " + incorrectRemaining + "\n");
-    
+
     printBoard();
   };
 
@@ -207,8 +226,10 @@ public class Game
       if (DEBUG_LOGS)
         System.out.println("\nRedoing the last undo move -> " + prevUndo + "\n");
 
-      int x = Character.getNumericValue(prevUndo.charAt(0));
-      int y = Character.getNumericValue(prevUndo.charAt(1));
+      String[] inputArr = prevUndo.split(" ");
+
+      int x = Integer.parseInt(inputArr[0]);
+      int y = Integer.parseInt(inputArr[1]);
 
       setCoordinates(x, y, prevUndo);
 
@@ -222,7 +243,7 @@ public class Game
 
   public static String sanitizeInput(String input)
   {
-    input = input.replaceAll("\\s+","");
+    input = input.replaceAll("\\s+", " ");
 
     if (DEBUG_LOGS)
       System.out.println("\nInput after sanitizing: " + input);
@@ -265,8 +286,10 @@ public class Game
       else
         incorrectRemaining++;
 
-      int x = Character.getNumericValue(prevMove.charAt(0));
-      int y = Character.getNumericValue(prevMove.charAt(1));
+      String[] inputArr = prevMove.split(" ");
+
+      int x = Integer.parseInt(inputArr[0]);
+      int y = Integer.parseInt(inputArr[1]);
 
       board[y][x] = "*";
 
