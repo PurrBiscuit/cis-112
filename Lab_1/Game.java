@@ -45,6 +45,24 @@ public class Game
     endGame();
   };
 
+  private static void checkMove(Move m)
+  {
+    int x = m.getX();
+    int y = m.getY();
+
+    if (isMatch(m))
+    {
+      board.setMark(x, y, "o");
+      m.setMatch(true);
+      stepsRemaining--;
+    }
+    else {
+      board.setMark(x, y, "x");
+      m.setMatch(false);
+      incorrectRemaining--;
+    };
+  };
+
   private static void clearRedo()
   {
     while (!redoStack.isEmpty())
@@ -104,17 +122,6 @@ public class Game
     return false;
   };
 
-  private static boolean isValidMove(int x, int y)
-  {
-    if ((x > boardLength - 1) || (y > boardLength - 1))
-    {
-      System.out.println("\n" + x + " " + y + " is not a valid move\n");
-      return false;
-    }
-
-    return true;
-  };
-
   private static boolean isValidInput(String input)
   {
     String[] inputArr = input.split(" ");
@@ -131,6 +138,17 @@ public class Game
     System.out.println("\n" + input + " is not a valid input\n");
 
     return false;
+  };
+
+  private static boolean isValidMove(int x, int y)
+  {
+    if ((x > boardLength - 1) || (y > boardLength - 1))
+    {
+      System.out.println("\n" + x + " " + y + " is not a valid move\n");
+      return false;
+    }
+
+    return true;
   };
 
   private static void populateCorrectMoves()
@@ -218,24 +236,6 @@ public class Game
       System.out.println("\n[DEBUG] Input after sanitizing: " + input);
 
     return input;
-  };
-
-  private static void checkMove(Move m)
-  {
-    int x = m.getX();
-    int y = m.getY();
-
-    if (isMatch(m))
-    {
-      board.setMark(x, y, "o");
-      m.setMatch(true);
-      stepsRemaining--;
-    }
-    else {
-      board.setMark(x, y, "x");
-      m.setMatch(false);
-      incorrectRemaining--;
-    };
   };
 
   private static void startGame()
