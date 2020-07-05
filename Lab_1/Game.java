@@ -1,3 +1,4 @@
+import ch02.stacks.LinkedStack;
 import java.util.*;
 
 public class Game
@@ -11,6 +12,8 @@ public class Game
   static int stepsRemaining = r.nextInt(boardLength) + 1;
   static String[][] board = new String[boardLength][boardLength];
   static String[] correctCoordinates = new String[stepsRemaining];
+  static LinkedStack<String> redoStack = new LinkedStack<>();
+  static LinkedStack<String> undoStack = new LinkedStack<>();
 
   public static void main(String[] args)
   {
@@ -49,6 +52,7 @@ public class Game
     System.out.print("Coordinates: ");
     Scanner kb = new Scanner(System.in);
     String input = kb.nextLine();
+
     int x = Character.getNumericValue(input.charAt(0));
     int y = Character.getNumericValue(input.charAt(1));
 
@@ -61,6 +65,8 @@ public class Game
       board[y][x] = "x";
       incorrectRemaining--;
     };
+
+    undoStack.push(input);
 
     System.out.println();
   };
