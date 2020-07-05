@@ -75,7 +75,9 @@ public class Game
     int x = Integer.parseInt(inputArr[0]);
     int y = Integer.parseInt(inputArr[1]);
 
-    if (isUniqueCoordinate(x, y))
+    Move move = new Move(x, y);
+
+    if (isUniqueCoordinate(move))
     {
       setCoordinates(x, y, input);
       undoStack.push(input);
@@ -111,8 +113,11 @@ public class Game
     return false;
   };
 
-  public static boolean isUniqueCoordinate(int x, int y)
+  public static boolean isUniqueCoordinate(Move m)
   {
+    int x = m.getX();
+    int y = m.getY();
+
     return board[y][x] == "*";
   };
 
