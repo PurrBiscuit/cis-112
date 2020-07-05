@@ -206,6 +206,11 @@ public class Game
 
   public static String sanitizeInput(String input)
   {
+    input = input.replaceAll("\\s+","");
+
+    if (DEBUG_LOGS)
+      System.out.println("\nInput after sanitizing: " + input);
+
     return input;
   };
 
