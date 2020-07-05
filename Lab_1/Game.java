@@ -62,12 +62,17 @@ public class Game
 
   public static void getCoordinates()
   {
-    System.out.print("Coordinates: ");
-    Scanner kb = new Scanner(System.in);
-    String input = sanitizeInput(kb.nextLine());
+    String input;
+    int x, y;
 
-    int x = Character.getNumericValue(input.charAt(0));
-    int y = Character.getNumericValue(input.charAt(1));
+    do {
+      System.out.print("Coordinates: ");
+      Scanner kb = new Scanner(System.in);
+      input = sanitizeInput(kb.nextLine());
+
+      x = Character.getNumericValue(input.charAt(0));
+      y = Character.getNumericValue(input.charAt(1));
+    } while (!isValidCoordinate(x, y));
 
     if (isUniqueCoordinate(x, y))
     {
@@ -78,6 +83,15 @@ public class Game
     } else {
       System.out.println("\nThe coordinates " + input + " where already input previously...skipping....\n");
     };
+  };
+
+  public static void initializeBoard()
+  {
+    for (int y = 0; y < board.length; y++)
+      for (int x = 0; x < board[y].length; x++)
+        board[y][x] = "*";
+
+    populateCorrectCoordinates();
   };
   
   public static boolean isMatch(String coord)
@@ -100,14 +114,16 @@ public class Game
   {
     return board[y][x] == "*";
   };
-  
-  public static void initializeBoard()
-  {    
-    for (int y = 0; y < board.length; y++)
-      for (int x = 0; x < board[y].length; x++)
-        board[y][x] = "*";
-        
-    populateCorrectCoordinates();
+
+  public static boolean isValidCoordinate(int x, int y)
+  {
+    if ((x > boardLength - 1) || (y > boardLength - 1))
+    {
+      System.out.println("\n" + x + y + " is not a valid coordinate\n");
+      return false;
+    }
+
+    return true;
   };
   
   public static void populateCorrectCoordinates()
