@@ -45,6 +45,12 @@ public class Game
     endGame();
   };
 
+  public static void clearRedo()
+  {
+    while (!redoStack.isEmpty())
+      redoStack.pop();
+  };
+
   public static void endGame()
   {
     System.out.println("\n**************\n  GAME OVER  \n**************\n");
@@ -66,6 +72,8 @@ public class Game
     setCoordinates(x, y, input);
 
     undoStack.push(input);
+
+    clearRedo();
 
     System.out.println();
   };
