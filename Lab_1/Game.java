@@ -8,7 +8,7 @@ public class Game
   final static boolean DEBUG_LOGS = false;
 
   private static Random r = new Random();
-  private static int boardLength = 3;
+  private static int boardLength = 8;
   private static int incorrectRemaining = 3;
   private static int stepsRemaining = r.nextInt(boardLength) + 1;
   private static Board board = new Board(boardLength);
