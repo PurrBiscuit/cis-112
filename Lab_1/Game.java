@@ -170,7 +170,23 @@ public class Game
 
   public static void redoMove()
   {
-    System.out.println("Redoing the last undone move...");
+    try {
+      String prevUndo = redoStack.top();
+
+      if (DEBUG_LOGS)
+        System.out.println("\nRedoing the last undo move -> " + prevUndo + "\n");
+
+      int x = Character.getNumericValue(prevUndo.charAt(0));
+      int y = Character.getNumericValue(prevUndo.charAt(1));
+
+      setCoordinates(x, y, prevUndo);
+
+      undoStack.push(prevUndo);
+
+      redoStack.pop();
+    } catch (StackUnderflowException err) {
+      System.out.println("\nNo more moves to redo...\n");
+    }
   };
 
   public static void setCoordinates(int x, int y, String coord)
