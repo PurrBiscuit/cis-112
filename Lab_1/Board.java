@@ -9,8 +9,8 @@ public class Board
     height = l;
     width = l;
 
-    for (int y = 0; y < grid.length; y++)
-      for (int x = 0; x < grid[y].length; x++)
+    for (int y = 0; y < height; y++)
+      for (int x = 0; x < width; x++)
         grid[y][x] = "*";
   }
 
@@ -38,22 +38,22 @@ public class Board
   {
     String result = "  ";
 
-    for (int i = 0; i < grid[0].length; i++)
+    for (int i = 0; i < width; i++)
     {
-      String extraSpace = (grid.length >= 10 && i < 10) ? " " : "";
+      String extraSpace = (width >= 10 && i < 10) ? " " : "";
       result += (extraSpace + i + " ");
     }
 
     result += "\n";
 
-    for (int y = 0; y < grid.length; y++)
+    for (int y = 0; y < height; y++)
     {
-      String extraSpace = (grid.length >= 10 && y < 10) ? " " : "";
+      String extraSpace = (height >= 10 && y < 10) ? " " : "";
       result += (y + " " + extraSpace);
-      for (int x = 0; x < grid[y].length; x++)
+      for (int x = 0; x < width; x++)
       {
-        String space = (grid.length >= 10) ? "  " : " ";
-        String trailing = (x == grid[y].length - 1) ? "\n" : space;
+        String space = (width >= 10) ? "  " : " ";
+        String trailing = (x == width - 1) ? "\n" : space;
         result += (grid[y][x] + trailing);
       }
     };
