@@ -7,14 +7,14 @@ public class Game
   // toggle this variable to turn debug logging on/off
   final static boolean DEBUG_LOGS = true;
 
-  static Random r = new Random();
-  static int boardLength = 8;
-  static int incorrectRemaining = 3;
-  static int stepsRemaining = r.nextInt(boardLength) + 1;
-  static Board board = new Board(boardLength);
-  static Move[] correctMoves = new Move[stepsRemaining];
-  static LinkedStack<Move> redoStack = new LinkedStack<>();
-  static LinkedStack<Move> undoStack = new LinkedStack<>();
+  private static Random r = new Random();
+  private static int boardLength = 8;
+  private static int incorrectRemaining = 3;
+  private static int stepsRemaining = r.nextInt(boardLength) + 1;
+  private static Board board = new Board(boardLength);
+  private static Move[] correctMoves = new Move[stepsRemaining];
+  private static LinkedStack<Move> redoStack = new LinkedStack<>();
+  private static LinkedStack<Move> undoStack = new LinkedStack<>();
 
   public static void main(String[] args)
   {
@@ -45,13 +45,13 @@ public class Game
     endGame();
   };
 
-  public static void clearRedo()
+  private static void clearRedo()
   {
     while (!redoStack.isEmpty())
       redoStack.pop();
   };
 
-  public static void endGame()
+  private static void endGame()
   {
     System.out.println("\n**************\n  GAME OVER  \n**************\n");
 
@@ -60,7 +60,7 @@ public class Game
     printFinalMessage();
   };
 
-  public static void getMove()
+  private static void getMove()
   {
     String input;
 
@@ -84,11 +84,11 @@ public class Game
       clearRedo();
       System.out.println();
     } else {
-      System.out.println("\nThe coordinates " + move + " were already input previously...skipping....\n");
+      System.out.println("\nThe coordinates " + move + " were already input previously, skipping....\n");
     };
   };
 
-  public static boolean isMatch(Move m)
+  private static boolean isMatch(Move m)
   {
     for (int i = 0; i < correctMoves.length; i++)
     {
@@ -104,7 +104,7 @@ public class Game
     return false;
   };
 
-  public static boolean isValidMove(int x, int y)
+  private static boolean isValidMove(int x, int y)
   {
     if ((x > boardLength - 1) || (y > boardLength - 1))
     {
@@ -115,7 +115,7 @@ public class Game
     return true;
   };
 
-  public static boolean isValidInput(String input)
+  private static boolean isValidInput(String input)
   {
     String[] inputArr = input.split(" ");
 
@@ -133,7 +133,7 @@ public class Game
     return false;
   };
 
-  public static void populateCorrectMoves()
+  private static void populateCorrectMoves()
   {
     for (int i = 0; i < correctMoves.length; i++)
     {
@@ -153,7 +153,7 @@ public class Game
     }
   };
   
-  public static void printFinalMessage()
+  private static void printFinalMessage()
   {
     String message;
 
@@ -167,7 +167,7 @@ public class Game
     System.out.println("\n" + message);
   };
 
-  public static void printSolution()
+  private static void printSolution()
   {
     for (int y = 0; y < board.getHeight(); y++)
       for (int x = 0; x < board.getWidth(); x++)
@@ -184,7 +184,7 @@ public class Game
     System.out.println(board);
   };
 
-  public static void printStatus()
+  private static void printStatus()
   {
     System.out.println("Steps Remaining: " + stepsRemaining);
     System.out.println("Incorrect Guesses Remaining: " + incorrectRemaining + "\n");
@@ -192,7 +192,7 @@ public class Game
     System.out.println(board);
   };
 
-  public static void redoMove()
+  private static void redoMove()
   {
     try {
       Move prevUndo = redoStack.top();
@@ -210,7 +210,7 @@ public class Game
     }
   };
 
-  public static String sanitizeInput(String input)
+  private static String sanitizeInput(String input)
   {
     input = input.replaceAll("\\s+", " ").trim();
 
@@ -220,7 +220,7 @@ public class Game
     return input;
   };
 
-  public static void checkMove(Move m)
+  private static void checkMove(Move m)
   {
     int x = m.getX();
     int y = m.getY();
@@ -238,7 +238,7 @@ public class Game
     };
   };
 
-  public static void startGame()
+  private static void startGame()
   {
     populateCorrectMoves();
     
@@ -247,7 +247,7 @@ public class Game
     System.out.println(startMessage);
   };
 
-  public static void undoMove()
+  private static void undoMove()
   {
     try {
       Move prevMove = undoStack.top();
