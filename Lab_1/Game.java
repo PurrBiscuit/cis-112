@@ -54,11 +54,11 @@ public class Game
 
     if (isMatch(input))
     {
-      board[x][y] = "o";
+      board[y][x] = "o";
       stepsRemaining--;
     }
     else {
-      board[x][y] = "x";
+      board[y][x] = "x";
       incorrectRemaining--;
     };
 
@@ -83,9 +83,9 @@ public class Game
   
   public static void initializeBoard()
   {    
-    for (int r = 0; r < board.length; r++)
-      for (int c = 0; c < board[r].length; c++)
-        board[r][c] = "*";
+    for (int y = 0; y < board.length; y++)
+      for (int x = 0; x < board[y].length; x++)
+        board[y][x] = "*";
         
     populateCorrectCoordinates();
   };
@@ -114,13 +114,13 @@ public class Game
   public static void printBoard()
   {
     System.out.println("  0 1 2 3 4 5 6 7");
-    for (int r = 0; r < board.length; r++)
+    for (int y = 0; y < board.length; y++)
     {
-      System.out.print(r + " ");
-      for (int c = 0; c < board[r].length; c++)
+      System.out.print(y + " ");
+      for (int x = 0; x < board[y].length; x++)
       {
-        String trailing = (c == board[r].length - 1) ? "\n" : " ";
-        System.out.print(board[r][c] + trailing);
+        String trailing = (x == board[y].length - 1) ? "\n" : " ";
+        System.out.print(board[y][x] + trailing);
       }
     };
   };
@@ -141,8 +141,8 @@ public class Game
 
   public static void printSolution()
   {
-    for (int x = 0; x < board.length; x++)
-      for (int y = 0; y < board[x].length; y++)
+    for (int y = 0; y < board.length; y++)
+      for (int x = 0; x < board[y].length; x++)
       {
         String coord = Integer.toString(x) + Integer.toString(y);
 
