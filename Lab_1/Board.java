@@ -28,6 +28,10 @@ public class Board
   {
     return width;
   }
+  public boolean isSpaceFree(int x, int y)
+  {
+    return grid[y][x] == "*";
+  }
 
   public void setMark(int x, int y, String s)
   {

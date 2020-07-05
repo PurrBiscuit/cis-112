@@ -77,14 +77,14 @@ public class Game
 
     Move move = new Move(x, y);
 
-    if (isUniqueMove(move))
+    if (board.isSpaceFree(x, y))
     {
       checkMove(move);
       undoStack.push(move);
       clearRedo();
       System.out.println();
     } else {
-      System.out.println("\nThe coordinates " + move + " where already input previously...skipping....\n");
+      System.out.println("\nThe coordinates " + move + " were already input previously...skipping....\n");
     };
   };
 
@@ -102,11 +102,6 @@ public class Game
     }
     
     return false;
-  };
-
-  public static boolean isUniqueMove(Move m)
-  {
-    return board.getMark(m.getX(), m.getY()) == "*";
   };
 
   public static boolean isValidMove(int x, int y)
