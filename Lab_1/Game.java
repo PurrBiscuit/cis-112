@@ -33,6 +33,12 @@ public class Game
       if (input.equals("m"))
         getCoordinates();
 
+      if (input.equals("r"))
+        redoMove();
+
+      if (input.equals("u"))
+        undoMove();
+
     } while (!quit && incorrectRemaining > 0 && stepsRemaining > 0);
 
     endGame();
@@ -169,6 +175,11 @@ public class Game
     printBoard();
   };
 
+  public static void redoMove()
+  {
+    System.out.println("Redoing the last undone move...");
+  }
+
   public static void startGame()
   {
     initializeBoard();
@@ -177,4 +188,9 @@ public class Game
     
     System.out.println(startMessage);
   };
+
+  public static void undoMove()
+  {
+    System.out.println("Undoing the last move...");
+  }
 }
