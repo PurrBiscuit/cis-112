@@ -13,8 +13,8 @@ public class Game
   static int stepsRemaining = r.nextInt(boardLength) + 1;
   static String[][] board = new String[boardLength][boardLength];
   static String[] correctCoordinates = new String[stepsRemaining];
-  static LinkedStack<String> redoStack = new LinkedStack<>();
-  static LinkedStack<String> undoStack = new LinkedStack<>();
+  static LinkedStack<Move> redoStack = new LinkedStack<>();
+  static LinkedStack<Move> undoStack = new LinkedStack<>();
 
   public static void main(String[] args)
   {
@@ -79,8 +79,8 @@ public class Game
 
     if (isUniqueCoordinate(move))
     {
-      setCoordinates(x, y, input);
-      undoStack.push(input);
+      setCoordinates(move);
+      undoStack.push(move);
       clearRedo();
       System.out.println();
     } else {
@@ -237,17 +237,12 @@ public class Game
   public static void redoMove()
   {
     try {
-      String prevUndo = redoStack.top();
+      Move prevUndo = redoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nRedoing the last undo move -> " + prevUndo + "\n");
+        System.out.println("\nRedoing the last undo move: " + prevUndo.toString() + "\n");
 
-      String[] inputArr = prevUndo.split(" ");
-
-      int x = Integer.parseInt(inputArr[0]);
-      int y = Integer.parseInt(inputArr[1]);
-
-      setCoordinates(x, y, prevUndo);
+      setCoordinates(prevUndo);
 
       undoStack.push(prevUndo);
 
@@ -267,15 +262,20 @@ public class Game
     return input;
   };
 
-  public static void setCoordinates(int x, int y, String coord)
+  public static void setCoordinates(Move m)
   {
-    if (isMatch(coord))
+    int x = m.getX();
+    int y = m.getY();
+
+    if (isMatch(m.getStringifiedCoordinates()))
     {
       board[y][x] = "o";
+      m.setMatch(true);
       stepsRemaining--;
     }
     else {
       board[y][x] = "x";
+      m.setMatch(false);
       incorrectRemaining--;
     };
   };
@@ -292,20 +292,18 @@ public class Game
   public static void undoMove()
   {
     try {
-      String prevMove = undoStack.top();
+      Move prevMove = undoStack.top();
 
       if (DEBUG_LOGS)
-        System.out.println("\nUndoing the last move -> " + prevMove + "\n");
+        System.out.println("\nUndoing the last move: " + prevMove.toString() + "\n");
 
-      if (isMatch(prevMove))
+      if (prevMove.isMatch())
         stepsRemaining++;
       else
         incorrectRemaining++;
 
-      String[] inputArr = prevMove.split(" ");
-
-      int x = Integer.parseInt(inputArr[0]);
-      int y = Integer.parseInt(inputArr[1]);
+      int x = prevMove.getX();
+      int y = prevMove.getY();
 
       board[y][x] = "*";
 
