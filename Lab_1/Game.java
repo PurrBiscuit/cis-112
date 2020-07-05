@@ -32,12 +32,16 @@ public class Game
 
     } while (!quit && incorrectRemaining > 0 && stepsRemaining > 0);
 
-    if (!quit)
-    {
-      printStatus();
-      String message = (incorrectRemaining == 0) ? "Too many incorrect guesses!" : "Congratulations, you won!";
-      System.out.println("\nGAME OVER!! " + message);
-    }
+    endGame();
+  };
+
+  public static void endGame()
+  {
+    System.out.println("\n**************\n  GAME OVER  \n**************\n");
+
+    printSolution();
+
+    printFinalMessage();
   };
 
   public static void getCoordinates()
@@ -57,6 +61,8 @@ public class Game
       board[x][y] = "x";
       incorrectRemaining--;
     };
+
+    System.out.println();
   };
   
   public static boolean isMatch(String coord)
@@ -119,6 +125,36 @@ public class Game
     };
   };
   
+  public static void printFinalMessage()
+  {
+    String message;
+
+    if (incorrectRemaining != 0 && stepsRemaining != 0)
+      message = "User quit game.";
+    else if (incorrectRemaining == 0)
+      message = "Too many incorrect guesses!";
+    else
+      message = "Congratulations, you won!";
+
+    System.out.println("\n" + message);
+  };
+
+  public static void printSolution()
+  {
+    for (int x = 0; x < board.length; x++)
+      for (int y = 0; y < board[x].length; y++)
+      {
+        String coord = Integer.toString(x) + Integer.toString(y);
+
+        if (isMatch(coord))
+          board[x][y] = "o";
+        else
+          board[x][y] = "x";
+      }
+
+    printBoard();
+  };
+
   public static void printStatus()
   {
     System.out.println("Steps Remaining: " + stepsRemaining);
@@ -126,7 +162,7 @@ public class Game
     
     printBoard();
   };
-  
+
   public static void startGame()
   {
     initializeBoard();
