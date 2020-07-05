@@ -32,7 +32,7 @@ public class Game
       quit = input.equals("q");
 
       if (input.equals("m"))
-        getCoordinates();
+        getMove();
 
       if (input.equals("r"))
         redoMove();
@@ -60,7 +60,7 @@ public class Game
     printFinalMessage();
   };
 
-  public static void getCoordinates()
+  public static void getMove()
   {
     String input;
 
@@ -77,9 +77,9 @@ public class Game
 
     Move move = new Move(x, y);
 
-    if (isUniqueCoordinate(move))
+    if (isUniqueMove(move))
     {
-      setCoordinates(move);
+      checkMove(move);
       undoStack.push(move);
       clearRedo();
       System.out.println();
@@ -104,16 +104,16 @@ public class Game
     return false;
   };
 
-  public static boolean isUniqueCoordinate(Move m)
+  public static boolean isUniqueMove(Move m)
   {
     return board.getMark(m.getX(), m.getY()) == "*";
   };
 
-  public static boolean isValidCoordinate(int x, int y)
+  public static boolean isValidMove(int x, int y)
   {
     if ((x > boardLength - 1) || (y > boardLength - 1))
     {
-      System.out.println("\n" + x + " " + y + " is not a valid coordinate\n");
+      System.out.println("\n" + x + " " + y + " is not a valid move\n");
       return false;
     }
 
@@ -129,7 +129,7 @@ public class Game
       try {
         int x = Integer.parseInt(inputArr[0]);
         int y = Integer.parseInt(inputArr[1]);
-        return isValidCoordinate(x, y);
+        return isValidMove(x, y);
       } catch (Exception e) {}
     }
 
@@ -205,7 +205,7 @@ public class Game
       if (DEBUG_LOGS)
         System.out.println("\n[DEBUG] Redoing the last undo move: " + prevUndo + "\n");
 
-      setCoordinates(prevUndo);
+      checkMove(prevUndo);
 
       undoStack.push(prevUndo);
 
@@ -225,7 +225,7 @@ public class Game
     return input;
   };
 
-  public static void setCoordinates(Move m)
+  public static void checkMove(Move m)
   {
     int x = m.getX();
     int y = m.getY();
