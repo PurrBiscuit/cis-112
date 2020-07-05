@@ -64,7 +64,7 @@ public class Game
   {
     System.out.print("Coordinates: ");
     Scanner kb = new Scanner(System.in);
-    String input = kb.nextLine();
+    String input = sanitizeInput(kb.nextLine());
 
     int x = Character.getNumericValue(input.charAt(0));
     int y = Character.getNumericValue(input.charAt(1));
@@ -195,6 +195,11 @@ public class Game
     } catch (StackUnderflowException err) {
       System.out.println("\nNo more moves to redo...\n");
     }
+  };
+
+  public static String sanitizeInput(String input)
+  {
+    return input;
   };
 
   public static void setCoordinates(int x, int y, String coord)
