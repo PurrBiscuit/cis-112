@@ -153,9 +153,9 @@ public class Game
         String coord = Integer.toString(x) + Integer.toString(y);
 
         if (isMatch(coord))
-          board[x][y] = "o";
+          board[y][x] = "o";
         else
-          board[x][y] = "x";
+          board[y][x] = "x";
       }
 
     printBoard();
