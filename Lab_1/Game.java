@@ -168,13 +168,24 @@ public class Game
   
   public static void printBoard()
   {
-    System.out.println("  0 1 2 3 4 5 6 7");
+    System.out.print("  ");
+
+    for (int i = 0; i < board[0].length; i++)
+    {
+      String extraSpace = (board.length >= 10 && i < 10) ? " " : "";
+      System.out.print(extraSpace + i + " ");
+    }
+
+    System.out.println();
+
     for (int y = 0; y < board.length; y++)
     {
-      System.out.print(y + " ");
+      String extraSpace = (board.length >= 10 && y < 10) ? " " : "";
+      System.out.print(y + " " + extraSpace);
       for (int x = 0; x < board[y].length; x++)
       {
-        String trailing = (x == board[y].length - 1) ? "\n" : " ";
+        String space = (board.length >= 10) ? "  " : " ";
+        String trailing = (x == board[y].length - 1) ? "\n" : space;
         System.out.print(board[y][x] + trailing);
       }
     };
