@@ -9,11 +9,19 @@ public class Move
     this.y = y;
   };
 
-  public boolean equals(Move m)
+  public boolean equals(Object obj)
   // checks to see if two Move objects are equal to each other
   {
+    if (obj == this)
+      return true;
+
+    if (obj == null || obj.getClass() != this.getClass())
+      return false;
+
+    Move m = (Move) obj;
+
     return m.x == x && m.y == y;
-  }
+  };
 
   public int getX()
   // getter for the x instance variable
@@ -43,5 +51,5 @@ public class Move
   // return the string representation of the instance
   {
     return "x -> " + x + ", y -> " + y;
-  }
+  };
 }
