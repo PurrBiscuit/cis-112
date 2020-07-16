@@ -6,18 +6,21 @@ public class Game
 {
   // toggle this variable to turn debug logging on/off
   final static boolean DEBUG_LOGS = false;
-
+  
+  // variables initialized in the createBoard method
+  private static int boardLength;
+  private static int stepsRemaining;
+  private static Board board;
+  private static Move[] correctMoves;
+  
   private static Random r = new Random();
-  private static int boardLength = 8;
   private static int incorrectRemaining = 3;
-  private static int stepsRemaining = r.nextInt(boardLength) + 1;
-  private static Board board = new Board(boardLength);
-  private static Move[] correctMoves = new Move[stepsRemaining];
   private static LinkedStack<Move> redoStack = new LinkedStack<>();
   private static LinkedStack<Move> undoStack = new LinkedStack<>();
 
   public static void main(String[] args)
   {
+    createBoard();
     startGame();
 
     boolean quit = false;
@@ -272,6 +275,44 @@ public class Game
   {
     board.setMark(m.getX(), m.getY(), "x");
     incorrectRemaining--;
+  }
+  
+  private static void createBoard()
+  // creates the board by validating and using user input to determine size.
+  // then initializes related variables stepsRemaining, boardLength, and correctMoves.
+  {
+    String input;
+    do {
+      System.out.print("Please enter your board length (between 4 and 16) or enter \"r\" for a randomly sized board: ");
+      Scanner kb = new Scanner(System.in);
+      input = sanitizeInput(kb.nextLine());
+    } while (!isValidLength(input));
+    
+    if (input.toLowerCase().equals("r"))
+      boardLength = r.nextInt(13) + 4;
+    else 
+      boardLength = Integer.parseInt(input);
+    
+    stepsRemaining = r.nextInt(boardLength) + 1;
+    board = new Board(boardLength);
+    correctMoves = new Move[stepsRemaining];
+  }
+  
+  private static boolean isValidLength(String input)
+  // determines whether a given input is valid. input should be "r"
+  // or a digit between 4 and 16 inclusive.
+  {
+    if (input.toLowerCase().equals("r"))
+      return true;
+    try
+    { 
+      int parsedInput = Integer.parseInt(input);
+      return parsedInput >= 4 && parsedInput <= 16;
+    }
+    catch (NumberFormatException err)
+    {
+      return false;
+    }
   }
 
   private static void startGame()
