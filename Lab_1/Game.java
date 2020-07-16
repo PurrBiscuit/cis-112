@@ -20,7 +20,6 @@ public class Game
 
   public static void main(String[] args)
   {
-    createBoard();
     startGame();
 
     boolean quit = false;
@@ -316,9 +315,11 @@ public class Game
   }
 
   private static void startGame()
-  // helper method to trigger the populateCorrectMoves method
-  // and print the welcome message to the user for a new game
+  // helper method to create the board, trigger the populateCorrectMoves
+  // method and print the welcome message to the user for a new game
   {
+    createBoard();
+
     populateCorrectMoves();
     
     System.out.println("\n**************\n  FIND THE o  \n**************\n");
