@@ -79,12 +79,12 @@ public class PurrTreeDriver
     tree = new PurrTree<>();
 
     // check height on tree with no nodes
-    // System.out.println("Iterative height on tree with no nodes: " + tree.height());
+    System.out.println("Iterative height on tree with no nodes: " + tree.height());
     System.out.println("Recursive height on tree with no nodes: " + tree.height2() + "\n");
 
     // check height on tree with one node
     tree.add(100);
-    // System.out.println("Iterative height on tree with one node: " + tree.height());
+    System.out.println("Iterative height on tree with one node: " + tree.height());
     System.out.println("Recursive height on tree with one node: " + tree.height2() + "\n");
 
     // reassign tree to new PurrTree object and add values
@@ -94,12 +94,12 @@ public class PurrTreeDriver
 
     // check iterative height again in tree and make
     // sure it's equal to 5 based on insertion order above
-//     int itHeight = tree.height();
-//
-//     if (itHeight == 5)
-//       System.out.println("Iterative height on tree after ordered insertions: " + itHeight);
-//     else
-//       System.out.println("[ERROR] - Something went wrong; iterative height is not 5 - total is: " + itHeight);
+    int itHeight = tree.height();
+
+    if (itHeight == 5)
+      System.out.println("Iterative height on tree after ordered insertions: " + itHeight);
+    else
+      System.out.println("[ERROR] - Something went wrong; iterative height is not 5 - total is: " + itHeight);
 
     // check recursive height again in tree and make sure
     // it's equal to 5 based on insertion order above
@@ -113,7 +113,7 @@ public class PurrTreeDriver
     // final check - add a bunch of new random value and check height afterward
     // add 100 more random numbers between 1 and 100 to the tree
     randomAdd(tree, 100, 100, false);
-   // System.out.println("Iterative height on tree after random insertions: " + tree.height());
+   System.out.println("Iterative height on tree after random insertions: " + tree.height());
     System.out.println("Recursive height on tree after random insertions: " + tree.height2() + "\n");
   }
   

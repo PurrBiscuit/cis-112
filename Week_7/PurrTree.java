@@ -1,4 +1,5 @@
 import ch02.stacks.*;
+import ch04.queues.*;
 import ch07.trees.*;
 import support.BSTNode;
 
@@ -75,6 +76,36 @@ public class PurrTree<T> extends BinarySearchTree<T>
   // Problem 32 - height methods
   //
   //----------------------------------
+  public int height()
+  {
+    int height = -1;
+    LinkedQueue<BSTNode<T>> queue = new LinkedQueue<>();
+
+    if (root != null)
+      queue.enqueue(root);
+
+    int nodeCount = queue.size();
+
+    while(nodeCount > 0) {
+      height++;
+
+      for(; nodeCount > 0; nodeCount--)
+      {
+        BSTNode<T> node = queue.dequeue();
+
+        if (node.getLeft() != null)
+          queue.enqueue(node.getLeft());
+
+        if (node.getRight() != null)
+          queue.enqueue(node.getRight());
+      }
+
+      nodeCount = queue.size();
+    }
+
+    return height;
+  };
+
   public int height2()
   {
     return recHeight(root);
