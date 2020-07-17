@@ -124,7 +124,7 @@ public class PurrTreeDriver
     
     for (int i = 1; i <= additions; i++)
     {
-      int n = r.nextInt(maxValue - 1) + 1;
+      int n = r.nextInt(maxValue) + 1;
       tree.add(n);
       
       if (logOut)
