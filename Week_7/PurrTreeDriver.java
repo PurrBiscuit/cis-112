@@ -113,8 +113,36 @@ public class PurrTreeDriver
     // final check - add a bunch of new random value and check height afterward
     // add 100 more random numbers between 1 and 100 to the tree
     randomAdd(tree, 100, 100, false);
-   System.out.println("Iterative height on tree after random insertions: " + tree.height());
+    System.out.println("Iterative height on tree after random insertions: " + tree.height());
     System.out.println("Recursive height on tree after random insertions: " + tree.height2() + "\n");
+
+    //----------------------------------
+    //
+    // Portion of Driver for Problem 48
+    //
+    //----------------------------------
+    boxyPrinter("Problem 48 (fRatio) Output:");
+
+    for (int i = 1; i <= 10; i++)
+    {
+      // instantiate new object to the existing tree ref var to start fresh
+      tree = new PurrTree<>();
+
+      // add 1000 nodes to tree with values between 1 and 3000
+      randomAdd(tree, 1000, 3000, false);
+
+      // Generate report for tree
+      System.out.println("Report for Tree #" + i + ":\n---------------------");
+      System.out.println("Optimal height: " + tree.minHeight());
+      System.out.println("Actual height: " + tree.height2());
+      System.out.println("Fullness Ration: " + tree.fRatio() + "\n");
+    }
+
+    // Discussion of fRatio method -
+    // An application could use the fRatio method to keep it's trees well balanced
+    // by periodically checking what the ratio is and taking action on the tree
+    // to trigger a method that could balance the tree if the ratio was below a certain
+    // threshold.  This method is a good indicator of a tree that isn't well balanced.
   }
   
   private static void randomAdd(PurrTree<Integer> tree, int additions, int maxValue, boolean logOut)

@@ -1,6 +1,7 @@
 import ch02.stacks.*;
 import ch04.queues.*;
 import ch07.trees.*;
+import java.text.DecimalFormat;
 import support.BSTNode;
 
 public class PurrTree<T> extends BinarySearchTree<T>
@@ -117,5 +118,39 @@ public class PurrTree<T> extends BinarySearchTree<T>
       return -1;
     else
       return Math.max(recHeight(node.getRight()), recHeight(node.getLeft())) + 1;
+  };
+
+  //----------------------------------
+  //
+  // Problem 48 - fRatio method
+  //
+  //----------------------------------
+  public double fRatio()
+  {
+    DecimalFormat df = new DecimalFormat("#.##");
+    int m = minHeight();
+    String r;
+
+    if (m == -1)
+      r = df.format(0.00);
+    else if (m == 0)
+      r = df.format(1.00);
+    else
+      r = df.format((double)(m) / (double)(this.height2()));
+
+    return Double.parseDouble(r);
+  };
+
+  public int minHeight()
+  {
+    int size = this.size();
+
+    if (size == 0)
+      return -1;
+
+    if (size == 1)
+      return 0;
+
+    return (int)(Math.log(size) / Math.log(2));
   };
 }
