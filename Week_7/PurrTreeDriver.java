@@ -8,65 +8,113 @@ public class PurrTreeDriver
     //
     // Portion of Driver for Problem 29
     //
-    //-----------------------------------
+    //----------------------------------
     boxyPrinter("Problem 29 (Min Value) Output:");
 
-    // instantiate a tree1 object
-    PurrTree<Integer> tree1 = new PurrTree<>();
+    // instantiate a tree object
+    PurrTree<Integer> tree = new PurrTree<>();
 
     // add 12 random numbers between 1 and 100 to the tree
-    randomAdd(tree1, 12, 100, true);
+    randomAdd(tree, 12, 100, true);
 
     // find the min value in the tree using the recursive min2 method
-    System.out.println("\nMinimum value in tree1 is: " + tree1.min2() + "\n");
+    System.out.println("\nMinimum value in tree is: " + tree.min2() + "\n");
 
     //----------------------------------
     //
     // Portion of Driver for Problem 30
     //
-    //-----------------------------------
+    //----------------------------------
     boxyPrinter("Problem 30 (Leaf Count) Output:");
 
-    // instantiate a tree2 object
-    PurrTree<Integer> tree2 = new PurrTree<>();
+    // instantiate new object to the existing tree ref var to start fresh
+    tree = new PurrTree<>();
 
     // check leafCount on tree with no nodes
-    System.out.println("Iterative leaf count on tree2 with no nodes: " + tree2.leafCount());
-    System.out.println("Recursive leaf count on tree2 with no nodes: " + tree2.leafCount2() + "\n");
+    System.out.println("Iterative leaf count on tree with no nodes: " + tree.leafCount());
+    System.out.println("Recursive leaf count on tree with no nodes: " + tree.leafCount2() + "\n");
 
     // check leafCount on tree with one node
-    tree2.add(100);
-    System.out.println("Iterative leaf count on tree2 with one node: " + tree2.leafCount());
-    System.out.println("Recursive leaf count on tree2 with one node: " + tree2.leafCount2() + "\n");
+    tree.add(100);
+    System.out.println("Iterative leaf count on tree with one node: " + tree.leafCount());
+    System.out.println("Recursive leaf count on tree with one node: " + tree.leafCount2() + "\n");
 
-    // reassign tree2 to new PurrTree object and add values
-    // in specific order to tree2 to control leaf count
-    tree2 = new PurrTree<>();
-    orderedAdd(tree2);
+    // reassign tree to new PurrTree object and add values
+    // in specific order to tree to control leaf count
+    tree = new PurrTree<>();
+    orderedAdd(tree);
 
-    // check iterative leaf count again in tree2 and make
+    // check iterative leaf count again in tree and make
     // sure it's equal to 5 based on insertion order above
-    int itLeafTotal = tree2.leafCount();
+    int itLeafTotal = tree.leafCount();
 
     if (itLeafTotal == 5)
-      System.out.println("Iterative leaf count on tree2 after ordered insertions: " + itLeafTotal);
+      System.out.println("Iterative leaf count on tree after ordered insertions: " + itLeafTotal);
     else
       System.out.println("[ERROR] - Something went wrong; iterative leaf count is not 5 - total is: " + itLeafTotal);
 
-    // check recursive leaf count again in tree2 and make
+    // check recursive leaf count again in tree and make
     // sure it's equal to 5 based on insertion order above
-    int recLeafTotal = tree2.leafCount2();
+    int recLeafTotal = tree.leafCount2();
 
     if (recLeafTotal == 5)
-      System.out.println("Recursive leaf count on tree2 after ordered insertions: " + recLeafTotal + "\n");
+      System.out.println("Recursive leaf count on tree after ordered insertions: " + recLeafTotal + "\n");
     else
       System.out.println("[ERROR] - Something went wrong; recursive leaf count is not 5 - total is: " + recLeafTotal + "\n");
 
     // final check - add a bunch of new random value and check leaf count afterward
     // add 100 more random numbers between 1 and 100 to the tree
-    randomAdd(tree2, 100, 100, false);
-    System.out.println("Iterative leaf count on tree2 after random insertions: " + tree2.leafCount());
-    System.out.println("Recursive leaf count on tree2 after random insertions: " + tree2.leafCount2() + "\n");
+    randomAdd(tree, 100, 100, false);
+    System.out.println("Iterative leaf count on tree after random insertions: " + tree.leafCount());
+    System.out.println("Recursive leaf count on tree after random insertions: " + tree.leafCount2() + "\n");
+
+    //----------------------------------
+    //
+    // Portion of Driver for Problem 32
+    //
+    //----------------------------------
+    boxyPrinter("Problem 32 (Height) Output:");
+
+    // instantiate new object to the existing tree ref var to start fresh
+    tree = new PurrTree<>();
+
+    // check height on tree with no nodes
+    // System.out.println("Iterative height on tree with no nodes: " + tree.height());
+    System.out.println("Recursive height on tree with no nodes: " + tree.height2() + "\n");
+
+    // check height on tree with one node
+    tree.add(100);
+    // System.out.println("Iterative height on tree with one node: " + tree.height());
+    System.out.println("Recursive height on tree with one node: " + tree.height2() + "\n");
+
+    // reassign tree to new PurrTree object and add values
+    // in specific order to tree to control height
+    tree = new PurrTree<>();
+    orderedAdd(tree);
+
+    // check iterative height again in tree and make
+    // sure it's equal to 5 based on insertion order above
+//     int itHeight = tree.height();
+//
+//     if (itHeight == 5)
+//       System.out.println("Iterative height on tree after ordered insertions: " + itHeight);
+//     else
+//       System.out.println("[ERROR] - Something went wrong; iterative height is not 5 - total is: " + itHeight);
+
+    // check recursive height again in tree and make sure
+    // it's equal to 5 based on insertion order above
+    int recHeight = tree.height2();
+
+    if (recHeight == 5)
+      System.out.println("Recursive height on tree after ordered insertions: " + recHeight + "\n");
+    else
+      System.out.println("[ERROR] - Something went wrong; recursive height is not 5 - total is: " + recHeight + "\n");
+
+    // final check - add a bunch of new random value and check height afterward
+    // add 100 more random numbers between 1 and 100 to the tree
+    randomAdd(tree, 100, 100, false);
+   // System.out.println("Iterative height on tree after random insertions: " + tree.height());
+    System.out.println("Recursive height on tree after random insertions: " + tree.height2() + "\n");
   }
   
   private static void randomAdd(PurrTree<Integer> tree, int additions, int maxValue, boolean logOut)
@@ -99,11 +147,11 @@ public class PurrTreeDriver
   {
     int length = text.length();
     String result = "";
-    
+
     for (int y = 0; y < 5; y++ )
     {
       result += "*";
-      
+
       if (y != 2)
       {
         String s = (y == 0 || y == 4) ? "*" : " ";
@@ -112,7 +160,7 @@ public class PurrTreeDriver
       }
       else
         result += " " + text + " ";
-      
+
       result += "*\n";
     }
     

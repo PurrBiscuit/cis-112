@@ -69,4 +69,22 @@ public class PurrTree<T> extends BinarySearchTree<T>
     else
       return recLeafCount(node.getLeft()) + recLeafCount(node.getRight());
   };
+
+  //----------------------------------
+  //
+  // Problem 32 - height methods
+  //
+  //----------------------------------
+  public int height2()
+  {
+    return recHeight(root);
+  };
+
+  public int recHeight(BSTNode<T> node)
+  {
+    if (node == null)
+      return -1;
+    else
+      return Math.max(recHeight(node.getRight()), recHeight(node.getLeft())) + 1;
+  };
 }
