@@ -33,6 +33,7 @@ public class PurrTree<T> extends BinarySearchTree<T>
   //
   //---------------------------------------
   public int leafCount()
+  // iterative solution to finding the number of leaf nodes on the tree
   {
     int count = 0;
     if (root != null)
@@ -58,11 +59,13 @@ public class PurrTree<T> extends BinarySearchTree<T>
   };
 
   public int leafCount2()
+  // entrypoint to the recursive solution for leaf node counting
   {
     return recLeafCount(root);
   };
 
   private int recLeafCount(BSTNode<T> node)
+  // recursive solution to finding the number of leaf nodes on the tree
   {
     if (node == null)
       return 0;
@@ -78,6 +81,9 @@ public class PurrTree<T> extends BinarySearchTree<T>
   //
   //----------------------------------
   public int height()
+  // iterative solution to finding the height of a tree
+  // referenced a copy of the "Cracking the Coding Interview" for help
+  // on different strategies to traverse the binary tree structure
   {
     int height = -1;
     LinkedQueue<BSTNode<T>> queue = new LinkedQueue<>();
@@ -108,11 +114,15 @@ public class PurrTree<T> extends BinarySearchTree<T>
   };
 
   public int height2()
+  // entrypoint to the recursive solution for tree height
   {
     return recHeight(root);
   };
 
   public int recHeight(BSTNode<T> node)
+  // recursive solution to finding the height of a tree
+  // referenced a copy of the "Cracking the Coding Interview" for help
+  // on different strategies to traverse the binary tree structure
   {
     if (node == null)
       return -1;
@@ -126,6 +136,8 @@ public class PurrTree<T> extends BinarySearchTree<T>
   //
   //----------------------------------
   public double fRatio()
+  // method to calculate the fullness ration of a tree based on
+  // the minimum height of the tree / the actual height of tree
   {
     DecimalFormat df = new DecimalFormat("#.##");
     int m = minHeight();
@@ -142,6 +154,8 @@ public class PurrTree<T> extends BinarySearchTree<T>
   };
 
   public int minHeight()
+  // method to calculate the minimum height of the tree
+  // based on the number of nodes in the tree
   {
     int size = this.size();
 
