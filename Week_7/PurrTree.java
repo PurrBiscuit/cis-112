@@ -162,9 +162,6 @@ public class PurrTree<T> extends BinarySearchTree<T>
     if (size == 0)
       return -1;
 
-    if (size == 1)
-      return 0;
-
     return (int)(Math.log(size) / Math.log(2));
   };
 }
