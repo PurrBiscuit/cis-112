@@ -58,7 +58,12 @@ public class BSTMap<K, V> implements MapInterface<K, V>
     if (k == null)
       throw new IllegalArgumentException("Maps do not allow null keys.");
 
-    return null;
+    V result = get(k);
+
+    if (result != null)
+      map.remove(new MapEntry<K, V>(k, null));
+
+    return result;
   }
   
   public int size()
