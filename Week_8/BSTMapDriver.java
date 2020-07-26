@@ -28,6 +28,13 @@ public class BSTMapDriver
 
     // print a final report after the map manipulations performed above
     printIdReport(employees);
+
+    // demonstrate iterator
+    boxyPrinter("BSTMap iterator: ");
+    System.out.println("Printing only ASSIGNED ids:");
+
+    for (MapEntry<Integer, String> t: employees)
+      System.out.println(t.getKey() + " -> " + t.getValue());
   }
 
   private static void printStats(BSTMap<Integer, String> m)
