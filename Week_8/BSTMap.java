@@ -12,7 +12,8 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public boolean contains(K k)
   {
-    return true;
+    MapEntry<K, V> entry = new MapEntry<K, V>(k, null);
+    return map.contains(entry);
   }
   
   public V get(K k)
@@ -22,7 +23,7 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public boolean isEmpty()
   {
-    return true;
+    return map.isEmpty();
   }
   
   public boolean isFull()
