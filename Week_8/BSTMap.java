@@ -17,6 +17,9 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public V get(K k)
   {
+    if (k == null)
+      throw new IllegalArgumentException("Maps do not allow null keys.");
+
     MapEntry<K, V> result = map.get(new MapEntry<K, V>(k, null));
 
     return result == null ? null : result.getValue();
@@ -40,6 +43,9 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public V put(K k, V v)
   {
+    if (k == null)
+      throw new IllegalArgumentException("Maps do not allow null keys.");
+
     MapEntry<K, V> entry = new MapEntry<K, V>(k, v);
     
     map.add(entry);
@@ -49,6 +55,9 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public V remove(K k)
   {
+    if (k == null)
+      throw new IllegalArgumentException("Maps do not allow null keys.");
+
     return null;
   }
   
