@@ -12,13 +12,14 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   
   public boolean contains(K k)
   {
-    MapEntry<K, V> entry = new MapEntry<K, V>(k, null);
-    return map.contains(entry);
+    return map.contains(new MapEntry<K, V>(k, null));
   }
   
   public V get(K k)
   {
-    return null;
+    MapEntry<K, V> result = map.get(new MapEntry<K, V>(k, null));
+
+    return result == null ? null : result.getValue();
   }
   
   public boolean isEmpty()

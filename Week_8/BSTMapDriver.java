@@ -16,6 +16,7 @@ public class BSTMapDriver
   {
     System.out.println("Size is now: " + m.size());
     System.out.println("isEmpty -> " + m.isEmpty());
-    System.out.println("Contains employee id #" + i + " -> " + m.contains(i) + "\n");
+    System.out.println("Contains employee id #" + i + " -> " + m.contains(i));
+    System.out.println("Value associated with employee id #" + i + " = " + m.get(i) + "\n");
   }
 }
