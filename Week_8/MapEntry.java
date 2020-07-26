@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 // MapEntry.java              by Dale/Joyce/Weems                   Chapter 8
 //
-// With compareTo method Added - Purr
+// With compareTo method added - Purr
 //---------------------------------------------------------------------------
 public class MapEntry<K, V> implements Comparable<MapEntry<K, V>>
 {
