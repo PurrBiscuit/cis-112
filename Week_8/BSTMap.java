@@ -3,19 +3,25 @@ import java.util.Iterator;
 
 public class BSTMap<K, V> implements MapInterface<K, V>
 {
+  // declare a BinarySearchTree object to wrap this class around
   private BinarySearchTree<MapEntry<K, V>> map;
   
-  public BSTMap() 
+  public BSTMap()
+  // constructor which instantiates the wrapper BinarySearchTree object
   {
     map = new BinarySearchTree<MapEntry<K, V>>();
   }
   
   public boolean contains(K k)
+  // returns true if key is found in map otherwise returns false
+  // wrapper around BinarySearchTree contains method
   {
     return map.contains(new MapEntry<K, V>(k, null));
   }
   
   public V get(K k)
+  // looks for a key in the map and returns the value if found
+  // otherwise returns null; wrapper around BinarySearchTree get method
   {
     if (k == null)
       throw new IllegalArgumentException("Maps do not allow null keys.");
@@ -26,6 +32,8 @@ public class BSTMap<K, V> implements MapInterface<K, V>
   }
   
   public boolean isEmpty()
+  // return true if no keys in map; otherwise returns false
+  // wrapper around BinarySearchTree isEmpty method
   {
     return map.isEmpty();
   }
@@ -46,11 +54,14 @@ public class BSTMap<K, V> implements MapInterface<K, V>
     if (k == null)
       throw new IllegalArgumentException("Maps do not allow null keys.");
 
-    MapEntry<K, V> entry = new MapEntry<K, V>(k, v);
-    
-    map.add(entry);
-    
-    return entry.getValue();
+    V result = get(k);
+
+    if (result != null)
+      map.remove(new MapEntry<K, V>(k, null));
+
+    map.add(new MapEntry<K, V>(k, v));
+
+    return result;
   }
   
   public V remove(K k)
