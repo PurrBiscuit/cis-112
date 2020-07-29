@@ -42,7 +42,7 @@ public class Categories
       Pattern pattern = Pattern.compile("\\w+");
       Matcher m = pattern.matcher(word);
 
-      if (m.find())
+      if (m.find() && !word.startsWith("\""))
       {
         String reserveWord = reservedWords.get(m.group());
 
