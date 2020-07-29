@@ -1,7 +1,8 @@
 //---------------------------------------------------------------------------
 // MapEntry.java              by Dale/Joyce/Weems                   Chapter 8
 //
-// With compareTo method added - Purr
+// Provides key, value pairs for use with a Map.
+// Keys are immutable.
 //---------------------------------------------------------------------------
 public class MapEntry<K, V> implements Comparable<MapEntry<K, V>>
 {
