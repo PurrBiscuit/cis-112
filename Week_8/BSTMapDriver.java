@@ -1,5 +1,3 @@
-// for public static
-
 public class BSTMapDriver
 {
   static String[] names = {"Steve", "Mike", "Nicky", "Mary", "Alan", "Rick", "Marge", "Bosco", "Rosie", "Grover", "Biff"};
