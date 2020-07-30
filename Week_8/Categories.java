@@ -30,6 +30,7 @@ public class Categories
     }
 
     int counter = 0;
+    int commentCounter = 0;
 
     Scanner inputFile = new Scanner(f);
 
@@ -39,24 +40,33 @@ public class Categories
     {
       String word = inputFile.next();
 
-      Pattern pattern = Pattern.compile("\\w+");
-      Matcher m = pattern.matcher(word);
-
-      if (m.find() && !word.startsWith("\""))
+      if (word.startsWith("//"))
       {
-        String reserveWord = reservedWords.get(m.group());
+        commentCounter++;
+        inputFile.nextLine();
+      }
+      else
+      {
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher m = pattern.matcher(word);
 
-        if (reserveWord != null)
+        if (m.find() && !word.startsWith("\""))
         {
-          System.out.println(m.group() + " -> " + reserveWord);
-          counter++;
+          String reserveWord = reservedWords.get(m.group());
+
+          if (reserveWord != null)
+          {
+            System.out.println(m.group() + " -> " + reserveWord);
+            counter++;
+          }
         }
       }
     }      
     
     System.out.println();
-    System.out.println("Complete.");
-    System.out.println(counter + " reserved words found. ");
+    System.out.println("\n**** Complete - Results: ****\n-----------------------------\n");
+    System.out.println("-> " + counter + " reserved words found.");
+    System.out.println("-> " + commentCounter + " comment lines skipped.");
  
     inputFile.close();
     keyboard.close();
