@@ -40,20 +40,28 @@ public class Categories
     {
       String word = inputFile.next();
 
+      // look for input files matches that start with // to indicate a comment line
       if (word.startsWith("//"))
       {
+        // increment the comment line counter and skip to the next line in the file
         commentCounter++;
         inputFile.nextLine();
       }
       else
       {
+        // regex matcher to look for word characters only
         Pattern pattern = Pattern.compile("\\w+");
         Matcher m = pattern.matcher(word);
 
+        // check if a match was found and if the word doesn't start with a
+        // double quote which indicates it's a string literal
         if (m.find() && !word.startsWith("\""))
         {
+          // look the matched word up in the reservedWords map
           String reserveWord = reservedWords.get(m.group());
 
+          // if a value was returned for the key that wasn't null
+          // then print it to the console and increment the counter
           if (reserveWord != null)
           {
             System.out.println(m.group() + " -> " + reserveWord);
@@ -62,9 +70,9 @@ public class Categories
         }
       }
     }      
-    
-    System.out.println();
-    System.out.println("\n**** Complete - Results: ****\n-----------------------------\n");
+
+    // print the results of the file scanning to the console
+    System.out.println("\n\n**** Complete - Results: ****\n-----------------------------\n");
     System.out.println("-> " + counter + " reserved words found.");
     System.out.println("-> " + commentCounter + " comment lines skipped.");
  
@@ -73,14 +81,15 @@ public class Categories
   }
 
   public static void addReservedWords(BSTMap<String, String> m)
+  // helper method to insert the reserved words key-value pairs into the map
   {
     // reserved word categories from -> https://www.journaldev.com/33226/java-keywords
     String[][] reservedWords = {
-      {"boolean", "byte", "char", "short", "int", "long", "float", "double", "void"},
-      {"public", "protected", "private", "abstract", "static", "final", "transient", "volatile", "synchronized", "native"},
-      {"class", "interface", "enum", "extends", "implements", "package", "throws"},
-      {"if", "else", "try", "catch", "finally", "do", "while", "for", "continue", "break", "switch", "case", "default", "throw", "return"},
-      {"this", "new", "super", "import", "instanceof", "null", "true", "false", "strictfp", "assert", "_", "goto", "const"}
+      {"boolean", "byte", "char", "short", "int", "long", "float", "double", "void"}, // primitive types
+      {"public", "protected", "private", "abstract", "static", "final", "transient", "volatile", "synchronized", "native"}, // modifiers
+      {"class", "interface", "enum", "extends", "implements", "package", "throws"}, // declarations
+      {"if", "else", "try", "catch", "finally", "do", "while", "for", "continue", "break", "switch", "case", "default", "throw", "return"}, // control flow
+      {"this", "new", "super", "import", "instanceof", "null", "true", "false", "strictfp", "assert", "_", "goto", "const"} // miscellaneous
     };
 
     for (int r = 0; r < reservedWords.length; r++)
