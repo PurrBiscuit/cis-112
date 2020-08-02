@@ -52,16 +52,16 @@ class TicketProcessor extends Thread
    }
 
    public void processOrders()
-   // Goes through all orders in queue, determines whether order is valid, removes appropriate number of tickets, and prints order details.
-   // CURRENTLY NOT WORKING.
+   // Goes through all orders in queue, determines whether order is valid,
+   // removes appropriate number of tickets, and prints order details.
    {
       while (!queue.isEmpty())
       {
          Order order = queue.dequeue();
 
-         if ((ticketsAvailable - order.numTickets) >= 0)
+         if ((ticketsAvailable - order.getNumTickets()) >= 0)
          {
-            ticketsAvailable -= order.numTickets;
+            ticketsAvailable -= order.getNumTickets();
             order.setStatus(true);
          }
          else
@@ -74,8 +74,8 @@ class TicketProcessor extends Thread
             if (ticketsAvailable > 1)
                trailing = "only " + ticketsAvailable + " tickets available.";
 
-            System.out.println("\n[WARN] - Could not process order for " + order.numTickets +
-                               " tickets placed by " + order.name + "; " + trailing);
+            System.out.println("\n[WARN] - Could not process order for " + order.getNumTickets() +
+                               " tickets placed by " + order.getName() + "; " + trailing);
          }
 
          order.setProcessedTime(new Date());
