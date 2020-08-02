@@ -34,7 +34,6 @@ public class Main
    // Takes order string and passes to parseOrder method.
    {
       String prompt = genericPrompt;
-      
       String input;
       boolean invalid = false;
 
