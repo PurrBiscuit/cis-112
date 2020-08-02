@@ -40,7 +40,7 @@ public class Main
 
       do
       {
-         if (invalid)
+         if (invalid && !prompt.contains("Invalid"))
             prompt = "Invalid entry. Please try again.\n" + prompt;
 
          input = JOptionPane.showInputDialog(prompt).replaceAll(" ", "");
