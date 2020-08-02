@@ -65,9 +65,18 @@ class TicketProcessor extends Thread
             order.setStatus(true);
          }
          else
+         {
+            String trailing = "no tickets available.";
+
+            if (ticketsAvailable == 1)
+               trailing = "only 1 ticket available.";
+
+            if (ticketsAvailable > 1)
+               trailing = "only " + ticketsAvailable + " tickets available.";
+
             System.out.println("\n[WARN] - Could not process order for " + order.numTickets +
-                               " tickets placed by " + order.name + "; only " +
-                               ticketsAvailable + " ticket are available at this time.");
+                               " tickets placed by " + order.name + "; " + trailing);
+         }
 
          order.setProcessedTime(new Date());
 
