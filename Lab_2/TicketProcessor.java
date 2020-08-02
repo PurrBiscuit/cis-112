@@ -1,7 +1,7 @@
 import ch04.queues.LinkedQueue;
 import support.LLNode;
 
-class TicketProcessor<T> extends Thread
+class TicketProcessor extends Thread
 {
    private static int timeoutPeriod = 5000;
    int ticketsAvailable = 10;
