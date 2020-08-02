@@ -27,6 +27,11 @@ public class Order
       return this.numTickets;
    }
    
+   public boolean getStatus()
+   {
+      return this.status;
+   }
+
    public void setStatus(boolean status)
    {
       this.status = status;

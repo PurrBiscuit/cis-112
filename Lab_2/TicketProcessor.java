@@ -80,7 +80,9 @@ class TicketProcessor extends Thread
 
          order.setProcessedTime(new Date());
 
-         System.out.println("\n***** ORDER PROCESSED *****");
+         String processedStatus = order.getStatus() ? "ORDER PROCESSED" : "ORDER NOT PROCESSED";
+
+         System.out.println("\n***** " + processedStatus + " *****");
          System.out.println(order + "\n\n" + ticketsAvailable + " tickets remaining.");
       }
    }
