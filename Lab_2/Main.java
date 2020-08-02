@@ -12,7 +12,7 @@ public class Main
    public static void main(String[] args)
    {
       processor.start();
-      takeOrder();
+      takeOrders();
    }
    
    public static void exit()
@@ -28,7 +28,7 @@ public class Main
       processor.addOrder(new Order(name, numTickets));
    }
 
-   public static void takeOrder()
+   public static void takeOrders()
    // Takes order string and passes to parseOrder method.
    {
       String prompt = genericPrompt;
