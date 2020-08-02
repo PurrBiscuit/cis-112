@@ -1,16 +1,16 @@
+import java.util.UUID;
+
 public class Order
 {
-   public String id;
-   public String name;
+   public String id, name, processedTime;
    public int numTickets;
    public boolean status;
-   public String processedTime;
    
    public Order(String name, int numTickets)
    {
       this.name = name;
       this.numTickets = numTickets;
-      this.id = null;
+      this.id = UUID.randomUUID().toString();
       this.status = false;
       this.processedTime = null;
    }
