@@ -4,7 +4,7 @@ import java.util.Date;
 
 class TicketProcessor extends Thread
 {
-   private static int timeoutPeriod = 5000;
+   private static int timeoutPeriod = 10000;
    int ticketsAvailable = 10;
    LinkedQueue<Order> queue;
    private volatile boolean stop = false;
@@ -40,22 +40,25 @@ class TicketProcessor extends Thread
    // Goes through all orders in queue, determines whether order is valid, removes appropriate number of tickets, and prints order details.
    // CURRENTLY NOT WORKING.
    {
-      Order order = queue.dequeue();
-
-      if ((ticketsAvailable - order.numTickets) >= 0)
+      while (!queue.isEmpty())
       {
-         ticketsAvailable -= order.numTickets;
-         order.setStatus(true);
+         Order order = queue.dequeue();
+
+         if ((ticketsAvailable - order.numTickets) >= 0)
+         {
+            ticketsAvailable -= order.numTickets;
+            order.setStatus(true);
+         }
+         else
+            System.out.println("\n[WARN] - Could not process order for " + order.numTickets +
+                               " tickets placed by " + order.name + "; only " +
+                               ticketsAvailable + " ticket are available at this time.");
+
+         order.setProcessedTime(new Date());
+
+         System.out.println("\n***** ORDER PROCESSED *****");
+         System.out.println(order + "\n");
       }
-      else
-         System.out.println("\n[WARN] - Could not process order for " + order.numTickets +
-                            " tickets placed by " + order.name + "; only " +
-                            ticketsAvailable + " ticket are available at this time.");
-
-      order.setProcessedTime(new Date());
-
-      System.out.println("\n***** ORDER PROCESSED *****");
-      System.out.println(order + "\n");
    }
    
    public void run()
