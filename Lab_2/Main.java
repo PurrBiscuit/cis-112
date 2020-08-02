@@ -17,9 +17,11 @@ public class Main
    
    public static void exit()
    {
-      System.out.println("Safely shutting down the ticket processor...fulfilling last requests before exiting...");
+      System.out.println("\n*********************************************\n" +
+                         "Safely shutting down the ticket processor...\n" +
+                         "Fulfilling last requests before exiting...\n" +
+                         "*********************************************\n");
       processor.end();
-      System.out.println("Exiting program.");
    }
 
    public static void placeOrder(String name, int numTickets)
