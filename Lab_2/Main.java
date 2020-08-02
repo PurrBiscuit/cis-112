@@ -37,26 +37,33 @@ public class Main
       
       String input;
       boolean invalid = false;
+      boolean cancelled;
 
       do
       {
          if (invalid && !prompt.contains("Invalid"))
             prompt = "Invalid entry. Please try again.\n" + prompt;
 
-         input = JOptionPane.showInputDialog(prompt).replaceAll(" ", "");
+         input = JOptionPane.showInputDialog(prompt);
+         cancelled = input == null;
 
-         if (input.matches("([A-Za-z])+:([0-9])+"))
+         if (!cancelled)
          {
-            String name = input.split(":")[0];
-            int numTickets = Integer.parseInt(input.split(":")[1]);
-            placeOrder(name, numTickets);
-            invalid = false;
-         }
-         else
-            invalid = true;
-      } while (!input.toLowerCase().equals("stop") && !processor.isStopped());
+            input = input.replaceAll(" ", "");
 
-      if (input.toLowerCase().equals("stop") && !processor.isStopped())
+            if (input.matches("([A-Za-z])+:([0-9])+"))
+            {
+               String name = input.split(":")[0];
+               int numTickets = Integer.parseInt(input.split(":")[1]);
+               placeOrder(name, numTickets);
+               invalid = false;
+            }
+            else
+               invalid = true;
+         }
+      } while (!cancelled && !input.toLowerCase().equals("stop") && !processor.isStopped());
+
+      if ((cancelled || input.toLowerCase().equals("stop")) && !processor.isStopped())
          userStop();
    }
 }
