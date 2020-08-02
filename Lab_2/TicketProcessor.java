@@ -16,6 +16,7 @@ class TicketProcessor<T> extends Thread
    // Checks whether any orders are in the queue. If so, process all orders.
    {
       try { Thread.sleep(timeoutPeriod); } catch (Exception e) {}
+
       if (queue.isEmpty())
          System.out.println("No orders to process.");
       else
@@ -54,6 +55,4 @@ class TicketProcessor<T> extends Thread
       queue = new LinkedQueue();
       checkTickets();
    }
-   
-   
 }
