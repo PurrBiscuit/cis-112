@@ -22,12 +22,6 @@ public class Main
       System.out.println("Exiting program.");
    }
 
-   public static void parseOrder(String input)
-   // Validates and parses the order string.
-   {
-      
-   }
-
    public static void placeOrder(String name, int numTickets)
    // Eventually, this will call the second thread.
    {
