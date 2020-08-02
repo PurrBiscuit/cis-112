@@ -47,7 +47,6 @@ public class Main
 
          if (input.matches("([A-Za-z])+:([0-9])+"))
          {
-            System.out.println("Input is " + input);
             String name = input.split(":")[0];
             int numTickets = Integer.parseInt(input.split(":")[1]);
             placeOrder(name, numTickets);
