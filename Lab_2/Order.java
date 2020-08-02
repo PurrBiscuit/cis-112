@@ -26,11 +26,6 @@ public class Order
    {
       return this.numTickets;
    }
-
-   public void setId(String id)
-   {
-      this.id = id;
-   }
    
    public void setStatus(boolean status)
    {
