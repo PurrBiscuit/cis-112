@@ -1,11 +1,12 @@
 import ch04.queues.LinkedQueue;
 import support.LLNode;
+import java.util.Date;
 
 class TicketProcessor extends Thread
 {
    private static int timeoutPeriod = 5000;
    int ticketsAvailable = 10;
-   LinkedQueue queue;
+   LinkedQueue<Order> queue;
    private volatile boolean stop = false;
    
    public void addOrder(Order order)
@@ -39,17 +40,17 @@ class TicketProcessor extends Thread
    // Goes through all orders in queue, determines whether order is valid, removes appropriate number of tickets, and prints order details.
    // CURRENTLY NOT WORKING.
    {
-      Order order = (Order)queue.dequeue();
+      Order order = queue.dequeue();
 
       if ((ticketsAvailable - order.numTickets) >= 0)
       {
          ticketsAvailable -= order.numTickets;
          order.setStatus(true);
       }
-      order.setProcessedTime("[PLACEHOLDER]");
+      order.setProcessedTime(new Date());
 
       System.out.println("\nORDER PROCESSED");
-      System.out.println(order + "\n\n\n");
+      System.out.println(order + "\n");
    }
    
    public void run()
@@ -57,7 +58,7 @@ class TicketProcessor extends Thread
    {
       System.out.println("Initializing tix queue...");
       System.out.println(ticketsAvailable + " tickets available for order!");
-      queue = new LinkedQueue();
+      queue = new LinkedQueue<>();
       checkTickets();
    }
 }
