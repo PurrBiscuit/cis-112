@@ -57,6 +57,7 @@ public class Main
                int numTickets = Integer.parseInt(input.split(":")[1]);
                placeOrder(name, numTickets);
                invalid = false;
+               prompt = genericPrompt;
             }
             else
                invalid = true;
