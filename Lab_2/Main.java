@@ -12,39 +12,20 @@ public class Main
    public static void main(String[] args)
    {
       processor.start();
-      takeOrder(false);
+      takeOrder();
    }
    
    public static void exit()
    {
-      System.out.println("Shutting down the thread...");
-      processor.stop();
+      System.out.println("Safely shutting down the ticket processor...fulfilling last requests before exiting...");
+      processor.end();
       System.out.println("Exiting program.");
    }
 
    public static void parseOrder(String input)
    // Validates and parses the order string.
    {
-      boolean invalid = false;
       
-      if (input.equals("STOP"))
-        processor.stop();
-
-      while (!input.toLowerCase().equals("stop"))
-      {
-         if (input.matches("([A-Za-z])+:([0-9])+"))
-         {
-            String name = input.split(":")[0];
-            int numTickets = Integer.parseInt(input.split(":")[1]);
-            placeOrder(name, numTickets);
-         }
-         else
-            invalid = true;
-
-         takeOrder(invalid);
-      }
-
-      exit();
    }
 
    public static void placeOrder(String name, int numTickets)
@@ -53,16 +34,35 @@ public class Main
       processor.addOrder(new Order(name, numTickets));
    }
 
-   public static void takeOrder(boolean previousInvalid)
+   public static void takeOrder()
    // Takes order string and passes to parseOrder method.
    {
       String prompt = genericPrompt;
       
-      if (previousInvalid)
-         prompt = "Invalid entry. Please try again.\n" + prompt;
-      
-      String input = JOptionPane.showInputDialog(prompt).replaceAll(" ", "");
-      
-      parseOrder(input);
+      String input;
+      boolean invalid = false;
+
+      do
+      {
+         if (invalid)
+            prompt = "Invalid entry. Please try again.\n" + prompt;
+
+         input = JOptionPane.showInputDialog(prompt).replaceAll(" ", "");
+
+         System.out.println(input);
+
+         if (input.matches("([A-Za-z])+:([0-9])+"))
+         {
+            System.out.println("Input is " + input);
+            String name = input.split(":")[0];
+            int numTickets = Integer.parseInt(input.split(":")[1]);
+            placeOrder(name, numTickets);
+            invalid = false;
+         }
+         else
+            invalid = true;
+      } while (!input.toLowerCase().equals("stop"));
+
+      exit();
    }
 }
