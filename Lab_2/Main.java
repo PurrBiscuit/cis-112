@@ -15,7 +15,7 @@ public class Main
       takeOrders();
    }
    
-   public static void exit()
+   public static void userStop()
    {
       System.out.println("\n*********************************************\n" +
                          "Safely shutting down the ticket processor...\n" +
@@ -54,8 +54,9 @@ public class Main
          }
          else
             invalid = true;
-      } while (!input.toLowerCase().equals("stop"));
+      } while (!input.toLowerCase().equals("stop") && !processor.isStopped());
 
-      exit();
+      if (input.toLowerCase().equals("stop") && !processor.isStopped())
+         userStop();
    }
 }

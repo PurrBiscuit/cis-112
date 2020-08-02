@@ -13,7 +13,7 @@ class TicketProcessor extends Thread
    {
       queue.enqueue(order);
    }
-   
+
    public void end()
    {
       stop = true;
@@ -24,18 +24,33 @@ class TicketProcessor extends Thread
    {
       while (!stop)
       {
-         try { Thread.sleep(timeoutPeriod); } catch (Exception e) {}
+         if (ticketsAvailable != 0)
+         {
+            try { Thread.sleep(timeoutPeriod); } catch (Exception e) {}
 
-         if (queue.isEmpty())
-            System.out.println("No orders to process.");
+            if (queue.isEmpty())
+            {
+               System.out.println("No orders to process.");
+               System.out.println(ticketsAvailable + " tickets remaining.");
+            }
+            else
+               processOrders();
+
+            checkTickets();
+         }
          else
-            processOrders();
-
-         System.out.println(ticketsAvailable + " tickets remaining.");
-         checkTickets();
+         {
+            System.out.println("No more tickets available - ticket processing stopping...");
+            stop = true;
+         }
       }
    }
    
+   public boolean isStopped()
+   {
+      return stop;
+   }
+
    public void processOrders()
    // Goes through all orders in queue, determines whether order is valid, removes appropriate number of tickets, and prints order details.
    // CURRENTLY NOT WORKING.
@@ -57,7 +72,7 @@ class TicketProcessor extends Thread
          order.setProcessedTime(new Date());
 
          System.out.println("\n***** ORDER PROCESSED *****");
-         System.out.println(order + "\n");
+         System.out.println(order + "\n\n" + ticketsAvailable + " tickets remaining.");
       }
    }
    
