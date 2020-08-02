@@ -31,7 +31,8 @@ public class Main
    }
 
    public static void takeOrders()
-   // Takes order string and passes to parseOrder method.
+   // Prompts user for order input sends the order to the ticket
+   // processor if it's valid; allows user to stop processor as well.
    {
       String prompt = genericPrompt;
       String input;
