@@ -1,10 +1,12 @@
 import java.util.UUID;
+import java.util.Date;
 
 public class Order
 {
-   public String id, name, processedTime;
-   public int numTickets;
-   public boolean status;
+   private String id, name;
+   private int numTickets;
+   private boolean status;
+   private Date processedTime;
    
    public Order(String name, int numTickets)
    {
@@ -15,17 +17,27 @@ public class Order
       this.processedTime = null;
    }
    
-   public void setId(String id)
+   public String getName()
    {
-      this.id = id;
+      return this.name;
+   }
+
+   public int getNumTickets()
+   {
+      return this.numTickets;
    }
    
+   public boolean getStatus()
+   {
+      return this.status;
+   }
+
    public void setStatus(boolean status)
    {
       this.status = status;
    }
    
-   public void setProcessedTime(String processedTime)
+   public void setProcessedTime(Date processedTime)
    {
       this.processedTime = processedTime;
    }

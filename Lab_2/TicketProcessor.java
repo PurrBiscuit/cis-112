@@ -1,18 +1,19 @@
 import ch04.queues.LinkedQueue;
 import support.LLNode;
+import java.util.Date;
 
 class TicketProcessor extends Thread
 {
-   private static int timeoutPeriod = 5000;
+   private static int timeoutPeriod = 10000;
    int ticketsAvailable = 10;
-   LinkedQueue queue;
+   LinkedQueue<Order> queue;
    private volatile boolean stop = false;
    
    public void addOrder(Order order)
    {
       queue.enqueue(order);
    }
-   
+
    public void end()
    {
       stop = true;
@@ -23,33 +24,67 @@ class TicketProcessor extends Thread
    {
       while (!stop)
       {
-         try { Thread.sleep(timeoutPeriod); } catch (Exception e) {}
+         if (ticketsAvailable != 0)
+         {
+            try { Thread.sleep(timeoutPeriod); } catch (Exception e) {}
 
-         if (queue.isEmpty())
-            System.out.println("No orders to process.");
+            if (queue.isEmpty())
+            {
+               System.out.println("No orders to process.");
+               System.out.println(ticketsAvailable + " tickets remaining.");
+            }
+            else
+               processOrders();
+
+            checkTickets();
+         }
          else
-            processOrders();
-
-         System.out.println(ticketsAvailable + " tickets remaining.");
-         checkTickets();
+         {
+            System.out.println("No more tickets available - ticket processing stopping...");
+            stop = true;
+         }
       }
    }
    
-   public void processOrders()
-   // Goes through all orders in queue, determines whether order is valid, removes appropriate number of tickets, and prints order details.
-   // CURRENTLY NOT WORKING.
+   public boolean isStopped()
    {
-      Order order = (Order)queue.dequeue();
+      return stop;
+   }
 
-      if ((ticketsAvailable - order.numTickets) >= 0)
+   public void processOrders()
+   // Goes through all orders in queue, determines whether order is valid,
+   // removes appropriate number of tickets, and prints order details.
+   {
+      while (!queue.isEmpty())
       {
-         ticketsAvailable -= order.numTickets;
-         order.setStatus(true);
-      }
-      order.setProcessedTime("[PLACEHOLDER]");
+         Order order = queue.dequeue();
 
-      System.out.println("\nORDER PROCESSED");
-      System.out.println(order + "\n\n\n");
+         if ((ticketsAvailable - order.getNumTickets()) >= 0)
+         {
+            ticketsAvailable -= order.getNumTickets();
+            order.setStatus(true);
+         }
+         else
+         {
+            String trailing = "no tickets available.";
+
+            if (ticketsAvailable == 1)
+               trailing = "only 1 ticket available.";
+
+            if (ticketsAvailable > 1)
+               trailing = "only " + ticketsAvailable + " tickets available.";
+
+            System.out.println("\n[WARN] - Could not process order for " + order.getNumTickets() +
+                               " tickets placed by " + order.getName() + "; " + trailing);
+         }
+
+         order.setProcessedTime(new Date());
+
+         String processedStatus = order.getStatus() ? "ORDER PROCESSED" : "ORDER NOT PROCESSED";
+
+         System.out.println("\n***** " + processedStatus + " *****");
+         System.out.println(order + "\n\n" + ticketsAvailable + " tickets remaining.");
+      }
    }
    
    public void run()
@@ -57,7 +92,7 @@ class TicketProcessor extends Thread
    {
       System.out.println("Initializing tix queue...");
       System.out.println(ticketsAvailable + " tickets available for order!");
-      queue = new LinkedQueue();
+      queue = new LinkedQueue<>();
       checkTickets();
    }
 }
