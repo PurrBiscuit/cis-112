@@ -5,6 +5,7 @@ import java.util.Date;
 class TicketProcessor extends Thread
 {
    private static int timeoutPeriod = 10000;
+   int moneyMade = 0;
    int ticketsAvailable = 10;
    LinkedQueue<Order> queue;
    private volatile boolean stop = false;
@@ -32,6 +33,7 @@ class TicketProcessor extends Thread
             {
                System.out.println("No orders to process.");
                System.out.println(ticketsAvailable + " tickets remaining.");
+               System.out.println("$" + moneyMade + ".00 earned so far.");
             }
             else
                processOrders();
@@ -63,6 +65,7 @@ class TicketProcessor extends Thread
          {
             ticketsAvailable -= order.getNumTickets();
             order.setStatus(true);
+            moneyMade += order.getPrice() * order.getNumTickets();
          }
          else
          {
@@ -84,6 +87,7 @@ class TicketProcessor extends Thread
 
          System.out.println("\n***** " + processedStatus + " *****");
          System.out.println(order + "\n\n" + ticketsAvailable + " tickets remaining.");
+         System.out.println("$" + moneyMade + ".00 earned so far.");
       }
    }
    

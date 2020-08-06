@@ -5,13 +5,15 @@ public class Order
 {
    private String id, name;
    private int numTickets;
+   private int price;
    private boolean status;
    private Date processedTime;
    
-   public Order(String name, int numTickets)
+   public Order(String name, int numTickets, int price)
    {
       this.name = name;
       this.numTickets = numTickets;
+      this.price = price;
       this.id = UUID.randomUUID().toString();
       this.status = false;
       this.processedTime = null;
@@ -25,6 +27,11 @@ public class Order
    public int getNumTickets()
    {
       return this.numTickets;
+   }
+   
+   public int getPrice()
+   {
+      return this.price;
    }
    
    public boolean getStatus()

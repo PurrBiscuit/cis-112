@@ -2,12 +2,14 @@ import javax.swing.JOptionPane;
 
 public class Main
 {
+   public static int ticketPrice = 50;
+   
    public static String genericPrompt = "Enter a name and quantity for order separated by a colon.\n" +
+                                        "Each ticket costs $" + ticketPrice + ".00.\n" +
                                         "Example: 'Michael: 3'.\n" +
                                         "Enter STOP to exit program.";
 
    public static TicketProcessor processor = new TicketProcessor();
-   
    
    public static void main(String[] args)
    {
@@ -27,7 +29,7 @@ public class Main
    public static void placeOrder(String name, int numTickets)
    // Eventually, this will call the second thread.
    {
-      processor.addOrder(new Order(name, numTickets));
+      processor.addOrder(new Order(name, numTickets, ticketPrice));
    }
 
    public static void takeOrders()
