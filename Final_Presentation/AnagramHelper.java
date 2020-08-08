@@ -56,5 +56,7 @@ public class AnagramHelper
          String trailing = ((i + 1) % 6 == 0) ? "\n" : padding(a[i], 14);
          System.out.print(a[i] + trailing);
       }
+
+      System.out.println("\n");
    }
 }
