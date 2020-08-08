@@ -4,6 +4,7 @@ public class Anagrams1 extends AnagramHelper
    {
       String[] words = generate();
       
+      boxyPrinter("Ungrouped Array output:");
       prettyPrint(words);
    }
 }
