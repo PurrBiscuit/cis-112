@@ -21,9 +21,11 @@ public class Anagrams1 extends AnagramHelper
    {
       String[] words = generate();
       
+      // print out the ungrouped array content first for comparison
       boxyPrinter("Ungrouped Array output:");
       prettyPrint(words);
 
+      // print out the grouped array after running through comparator
       boxyPrinter("Grouped Array output:");
       Arrays.sort(words, new AnagramComparator());
       prettyPrint(words);
