@@ -9,11 +9,11 @@ public class Anagrams2 extends AnagramHelper
       String[] words = generate();
 
       // print out the ungrouped array content first for comparison
-      boxyPrinter("Ungrouped Array output:");
+      boxyPrinter("Ungrouped Array Output:");
       prettyPrint(words);
 
       // print out the grouped array after running through sort method
-      boxyPrinter("Grouped Map output:");
+      boxyPrinter("Grouped Map Output:");
       sort(words);
       prettyPrint(words);
    }

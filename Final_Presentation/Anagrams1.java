@@ -22,11 +22,11 @@ public class Anagrams1 extends AnagramHelper
       String[] words = generate();
       
       // print out the ungrouped array content first for comparison
-      boxyPrinter("Ungrouped Array output:");
+      boxyPrinter("Ungrouped Array Output:");
       prettyPrint(words);
 
       // print out the grouped array after running through comparator
-      boxyPrinter("Grouped Array output:");
+      boxyPrinter("Grouped Array Output:");
       Arrays.sort(words, new AnagramComparator());
       prettyPrint(words);
    }
