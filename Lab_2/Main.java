@@ -12,12 +12,15 @@ public class Main
    private static TicketProcessor processor = new TicketProcessor();
    
    public static void main(String[] args)
+   // main method to start the ticket processor thread
+   // and the jOptionPane UI loop to take the orders
    {
       processor.start();
       takeOrders();
    }
    
    private static void userStop()
+   // stops the processor thread if the user stops the processing
    {
       System.out.println("\n*********************************************\n" +
                          "Safely shutting down the ticket processor...\n" +
@@ -27,13 +30,13 @@ public class Main
    }
 
    private static void placeOrder(String name, int numTickets)
-   // Eventually, this will call the second thread.
+   // add a valid order to the ticket processor
    {
       processor.addOrder(new Order(name, numTickets, ticketPrice));
    }
 
    private static void takeOrders()
-   // Prompts user for order input sends the order to the ticket
+   // prompts user for order input and sends the order to the ticket
    // processor if it's valid; allows user to stop processor as well.
    {
       String prompt = genericPrompt;

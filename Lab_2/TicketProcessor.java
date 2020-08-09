@@ -16,12 +16,14 @@ class TicketProcessor extends Thread
    }
 
    public void end()
+   // sets the stop variable to true to stop the thread processing loop
    {
       stop = true;
    }
 
    public void checkTickets()
    // Checks whether any orders are in the queue. If so, process all orders.
+   // will stop the thread if there are no more tickets available as well.
    {
       while (!stop)
       {
@@ -54,7 +56,7 @@ class TicketProcessor extends Thread
    }
 
    public void processOrders()
-   // Goes through all orders in queue, determines whether order is valid,
+   // goes through all orders in queue, determines whether order is valid,
    // removes appropriate number of tickets, and prints order details.
    {
       while (!queue.isEmpty())
@@ -92,7 +94,7 @@ class TicketProcessor extends Thread
    }
    
    public void run()
-   // Initializes thread
+   // initializes thread
    {
       System.out.println("Initializing tix queue...");
       System.out.println(ticketsAvailable + " tickets available for order!");
